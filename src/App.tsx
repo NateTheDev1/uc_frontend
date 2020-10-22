@@ -4,6 +4,8 @@ import { PageTransition } from '@steveeeie/react-page-transition';
 import Home from './pages/Home';
 import Navbar from './components/Navbar';
 
+import BG from './background.jpg';
+
 const App = () => {
 	return (
 		<Router>
@@ -12,7 +14,13 @@ const App = () => {
 					display: 'flex',
 					width: '100%',
 					height: '100%',
-					flexDirection: 'column'
+					flexDirection: 'column',
+
+					background: ` linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(${BG})`,
+
+					backgroundPosition: 'center',
+					backgroundRepeat: ' no-repeat',
+					backgroundSize: 'cover'
 				}}
 			>
 				<Navbar />

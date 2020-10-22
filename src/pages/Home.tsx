@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import monitor from '../monitor.svg';
+import logo from '../logo.png';
+
+import FadeIn from 'react-fade-in';
 
 const Home = () => {
 	const history = useHistory();
@@ -9,7 +11,18 @@ const Home = () => {
 	return (
 		<>
 			<div className="home-root">
-				<div className="home-left">
+				<FadeIn className="home-left" delay={200}>
+					<motion.div
+						style={{ width: '0%' }}
+						animate={{ width: '100%' }}
+						transition={{ duration: 0.5 }}
+					>
+						<img
+							src={logo}
+							alt="untangled cables"
+							style={{ width: '30%' }}
+						/>
+					</motion.div>
 					<h1>The Premium Hand Crafted Cable Experience.</h1>
 					<p>
 						Hand crafted paracord cables made specific for your
@@ -19,8 +32,8 @@ const Home = () => {
 					<button onClick={() => history.push('/shop')}>
 						Get Shopping
 					</button>
-				</div>
-				<motion.div
+				</FadeIn>
+				{/* <motion.div
 					style={{ width: '0%' }}
 					animate={{ width: '45%' }}
 					transition={{ duration: 0.5 }}
@@ -30,7 +43,7 @@ const Home = () => {
 						alt="monitor"
 						style={{ width: '100%' }}
 					/>
-				</motion.div>
+				</motion.div> */}
 			</div>
 		</>
 	);

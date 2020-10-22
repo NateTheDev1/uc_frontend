@@ -1,14 +1,23 @@
 .home-root {
-	width: 80%;
+	width: 50%;
 	margin: 0 auto;
 	color: white;
-	margin-top: 10%;
+	margin-top: 2%;
 	display: flex;
 	justify-content: space-evenly;
 
 	.home-left {
 		padding: 2%;
-		width: 40%;
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+
+		width: 100%;
+
+		img {
+			margin: 0 auto;
+		}
 
 		h1 {
 			color: #bc67ff;
