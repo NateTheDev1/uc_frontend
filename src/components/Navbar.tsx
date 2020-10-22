@@ -14,7 +14,7 @@ const Navbar = () => {
 	}, [location]);
 
 	return (
-		<AppBar elevation={3} position="static" className="navbar-root">
+		<AppBar elevation={0} position="static" className="navbar-root">
 			<Toolbar className="navbar">
 				<div className="nav-left">
 					{/* <img src={logo} alt="Untangled cables" className="logo" /> */}
