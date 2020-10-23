@@ -6,13 +6,21 @@ const Shop = () => {
 
 	return (
 		<div className="shop-root">
-			<div
-				className="shop-box-left"
-				onClick={() => history.push('/shop/mice')}
-			>
-				Mice Cables
+			<div className="shop-top">
+				<h1>PRODUCT GROUPS</h1>
+				<hr />
 			</div>
-			<div className="shop-box-right">Keyboard Cables (Coming Soon)</div>
+			<div className="shop-bottom">
+				<div
+					className="shop-box-left"
+					onClick={() => history.push('/shop/mice')}
+				>
+					Mouse Cables
+				</div>
+				<div className="shop-box-right">
+					Keyboard Cables (Coming Soon)
+				</div>
+			</div>
 		</div>
 	);
 };

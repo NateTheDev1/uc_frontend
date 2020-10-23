@@ -1,0 +1,81 @@
+.shop-root {
+	color: black;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	margin: 0 auto;
+	width: 75%;
+	height: 100%;
+
+	.shop-top {
+		display: flex;
+		flex-direction: column;
+		margin-top: 10%;
+		margin-bottom: 10%;
+
+		h1 {
+			font-size: 2.5rem;
+			letter-spacing: 15px;
+		}
+
+		hr {
+			width: 50%;
+		}
+	}
+
+	.shop-bottom {
+		width: 100%;
+		margin: 0 auto;
+		display: flex;
+		justify-content: space-around;
+
+		.shop-box-left {
+			width: 40%;
+			height: 300px;
+			background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+				url(../mice.jpg);
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: cover;
+			color: white;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			transition: 0.3s;
+			font-size: 1.2rem;
+			letter-spacing: 3px;
+			text-transform: uppercase;
+		}
+
+		.shop-box-left:hover {
+			cursor: pointer;
+			height: 315px;
+			width: 42%;
+		}
+
+		.shop-box-right {
+			width: 40%;
+			height: 300px;
+			background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+				url(../keyboard.jpg);
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: cover;
+			color: white;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			transition: 0.3s;
+			font-size: 1.2rem;
+			letter-spacing: 3px;
+			text-transform: uppercase;
+		}
+
+		.shop-box-right:hover {
+			cursor: pointer;
+			height: 315px;
+			width: 42%;
+		}
+	}
+}

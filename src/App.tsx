@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Navbar from './components/Navbar';
 
 import Shop from './pages/Shop';
+import MiceShop from './pages/Mice';
 
 const App = () => {
 	const [page, setPage] = useState('');
@@ -31,8 +32,14 @@ const App = () => {
 							>
 								<Switch location={location}>
 									<Route
+										exact
 										path="/shop"
 										component={() => <Shop />}
+									/>
+									<Route
+										exact
+										path="/shop/mice"
+										component={() => <MiceShop />}
 									/>
 									<Route
 										path="/"

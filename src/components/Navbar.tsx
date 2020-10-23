@@ -90,7 +90,7 @@ const Navbar = () => {
 									page === '/account' ||
 									page === '/signup'
 										? '#BB67FF'
-										: 'white'
+										: 'black'
 							}}
 							className="nav-icon"
 						/>
