@@ -1,0 +1,38 @@
+.login-root {
+	color: black;
+	margin: 0 auto;
+	width: 75%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+
+	.login-top {
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+
+		margin-bottom: 5%;
+		text-transform: uppercase;
+
+		h1 {
+			font-size: 2.5rem;
+			letter-spacing: 15px;
+			margin: 0;
+			margin-bottom: 20px;
+		}
+
+		hr {
+			width: 50%;
+		}
+	}
+
+	.login-form {
+		display: flex;
+		flex-direction: column;
+		width: 50%;
+		margin: 0 auto;
+	}
+}

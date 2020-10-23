@@ -1,9 +1,9 @@
-import { combineReducers } from "redux";
-import { LOGIN_OK, LOGOUT } from "./types";
+import { combineReducers } from 'redux';
+import { LOGIN_OK, LOGOUT } from './types';
 const initialState = {
 	loaded: false,
-	authenticated: localStorage.getItem("ps_token") ? true : false,
-	token: localStorage.getItem("ps_token"),
+	authenticated: localStorage.getItem('uc_token') ? true : false,
+	token: localStorage.getItem('uc_token')
 };
 
 const globalReducer = (state = initialState, action) => {
@@ -12,12 +12,12 @@ const globalReducer = (state = initialState, action) => {
 			return {
 				...state,
 				authenticated: true,
-				token: action.payload?.token,
+				token: action.payload?.token
 			};
 		case LOGOUT:
 			return {
 				...initialState,
-				authenticated: false,
+				authenticated: false
 			};
 		default:
 			return { ...state };
@@ -25,7 +25,7 @@ const globalReducer = (state = initialState, action) => {
 };
 
 const reducer = combineReducers({
-	globalReducer,
+	globalReducer
 });
 
 export default reducer;

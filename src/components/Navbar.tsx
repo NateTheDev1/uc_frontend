@@ -4,18 +4,35 @@ import React, { useState, useEffect } from 'react';
 
 // import logo from '../logo.png';
 import { AccountCircle } from '@material-ui/icons';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import FadeIn from 'react-fade-in';
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { LOGOUT } from '../services/types';
 
 const Navbar = () => {
 	const location = useLocation();
+	const history = useHistory();
 	const [page, setPage] = useState('');
+
+	const dispatch = useDispatch();
 
 	const [dropDownOpen, setDropDownOpen] = useState(false);
 
 	useEffect(() => {
 		setPage(location.pathname);
 	}, [location]);
+
+	const authenticated = useSelector(
+		(state: RootStateOrAny) => state.globalReducer.authenticated
+	);
+
+	const handleLogout = () => {
+		localStorage.removeItem('uc_token');
+		dispatch({ type: LOGOUT });
+		window.location.reload();
+	};
 
 	return (
 		<AppBar elevation={0} position="static" className="navbar-root">
@@ -82,7 +99,14 @@ const Navbar = () => {
 						)}
 					</Link>
 
-					<IconButton color="inherit">
+					<IconButton
+						color="inherit"
+						onClick={() =>
+							authenticated
+								? history.push('/account')
+								: history.push('/login')
+						}
+					>
 						<AccountCircle
 							style={{
 								color:
@@ -95,6 +119,14 @@ const Navbar = () => {
 							className="nav-icon"
 						/>
 					</IconButton>
+					{authenticated && (
+						<IconButton color="inherit" onClick={handleLogout}>
+							<ExitToAppIcon
+								style={{ color: 'black' }}
+								className="nav-icon exit-icon"
+							/>
+						</IconButton>
+					)}
 				</div>
 			</Toolbar>
 		</AppBar>
