@@ -84,3 +84,18 @@ body {
 		}
 	}
 }
+
+.dropdown-link {
+	width: 100% !important;
+	font-size: 0.9rem !important;
+	text-transform: none !important;
+	letter-spacing: normal !important;
+}
+
+.bg-class {
+	background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+		url(../background.jpg);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}

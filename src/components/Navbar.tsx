@@ -5,9 +5,13 @@ import React, { useState, useEffect } from 'react';
 // import logo from '../logo.png';
 import { AccountCircle } from '@material-ui/icons';
 import { Link, useLocation } from 'react-router-dom';
+import FadeIn from 'react-fade-in';
+
 const Navbar = () => {
 	const location = useLocation();
 	const [page, setPage] = useState('');
+
+	const [dropDownOpen, setDropDownOpen] = useState(false);
 
 	useEffect(() => {
 		setPage(location.pathname);
@@ -39,11 +43,43 @@ const Navbar = () => {
 
 					<Link
 						to="/shop"
+						onMouseOver={() => setDropDownOpen(true)}
+						onMouseLeave={() => setDropDownOpen(false)}
 						style={{
 							color: page === '/shop' ? '#BB67FF' : '#8F8F8F'
 						}}
 					>
 						Shop (3)
+						{dropDownOpen && (
+							<div
+								onMouseEnter={() => setDropDownOpen(true)}
+								style={{
+									width: '100px',
+
+									height: '200px',
+									paddingLeft: '10px',
+
+									position: 'fixed',
+									background: 'rgba(255,255,255, 0.2)',
+									transition: '0.5s'
+								}}
+							>
+								<Link
+									to="/shop/mice"
+									style={{
+										color:
+											page.includes('/shop') &&
+											page.includes('/mice')
+												? '#BB67FF'
+												: '#8F8F8F'
+									}}
+									className="dropdown-link"
+								>
+									<br />
+									Mouse cords
+								</Link>
+							</div>
+						)}
 					</Link>
 
 					<IconButton color="inherit">

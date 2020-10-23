@@ -1,37 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import { PageTransition } from '@steveeeie/react-page-transition';
 import Home from './pages/Home';
 import Navbar from './components/Navbar';
 
-import BG from './background.jpg';
+import Shop from './pages/Shop';
 
 const App = () => {
+	const [page, setPage] = useState('');
+
 	return (
 		<Router>
 			<div
+				className={page === '/' ? 'bg-class' : ''}
 				style={{
 					display: 'flex',
 					width: '100%',
 					height: '100%',
-					flexDirection: 'column',
-
-					background: ` linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(${BG})`,
-
-					backgroundPosition: 'center',
-					backgroundRepeat: ' no-repeat',
-					backgroundSize: 'cover'
+					flexDirection: 'column'
 				}}
 			>
 				<Navbar />
 				<Route
 					render={({ location }) => {
+						setPage(location.pathname);
 						return (
 							<PageTransition
 								preset="scaleUpScaleUp"
 								transitionKey={location.pathname}
 							>
 								<Switch location={location}>
+									<Route
+										path="/shop"
+										component={() => <Shop />}
+									/>
 									<Route
 										path="/"
 										component={() => <Home />}

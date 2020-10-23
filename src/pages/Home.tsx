@@ -15,7 +15,7 @@ const Home = () => {
 					<motion.div
 						style={{ width: '0%' }}
 						animate={{ width: '100%' }}
-						transition={{ duration: 0.5 }}
+						transition={{ duration: 0.2 }}
 					>
 						<img
 							src={logo}
@@ -30,20 +30,9 @@ const Home = () => {
 						mouse with the reliabiity of a wired one.
 					</p>
 					<button onClick={() => history.push('/shop')}>
-						Get Shopping
+						Start Shopping
 					</button>
 				</FadeIn>
-				{/* <motion.div
-					style={{ width: '0%' }}
-					animate={{ width: '45%' }}
-					transition={{ duration: 0.5 }}
-				>
-					<img
-						src={monitor}
-						alt="monitor"
-						style={{ width: '100%' }}
-					/>
-				</motion.div> */}
 			</div>
 		</>
 	);
