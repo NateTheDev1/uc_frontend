@@ -1,9 +1,9 @@
-import { AppBar, IconButton, Toolbar } from '@material-ui/core';
+import { AppBar, Badge, IconButton, Toolbar } from '@material-ui/core';
 
 import React, { useState, useEffect } from 'react';
 
 // import logo from '../logo.png';
-import { AccountCircle } from '@material-ui/icons';
+import { AccountCircle, ShoppingCartSharp } from '@material-ui/icons';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
@@ -119,6 +119,26 @@ const Navbar = () => {
 							className="nav-icon"
 						/>
 					</IconButton>
+
+					<IconButton
+						color="inherit"
+						onClick={() => history.push('/cart')}
+					>
+						<Badge
+							badgeContent={3}
+							style={{
+								color: page === '/' ? '#8F8F8F' : 'black'
+							}}
+						>
+							<ShoppingCartSharp
+								className="nav-icon"
+								style={{
+									color: '#BB67FF'
+								}}
+							/>
+						</Badge>
+					</IconButton>
+
 					{authenticated && (
 						<IconButton color="inherit" onClick={handleLogout}>
 							<ExitToAppIcon

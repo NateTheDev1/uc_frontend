@@ -6,7 +6,7 @@ const initialState = {
 	token: localStorage.getItem('uc_token')
 };
 
-const globalReducer = (state = initialState, action) => {
+const globalReducer = (state = initialState, action: any) => {
 	switch (action.type) {
 		case LOGIN_OK:
 			return {
