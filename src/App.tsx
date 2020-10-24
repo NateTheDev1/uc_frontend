@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
+//@ts-ignore
 import { PageTransition } from '@steveeeie/react-page-transition';
 import Home from './pages/Home';
 import Navbar from './components/Navbar';
@@ -8,6 +9,8 @@ import Shop from './pages/Shop';
 import MiceShop from './pages/Mice';
 import Login from './pages/Onboarding/Login';
 import SignUp from './pages/Onboarding/SignUp';
+import { Fab } from '@material-ui/core';
+import { ShoppingCart } from '@material-ui/icons';
 
 const App = () => {
 	const [page, setPage] = useState('');
@@ -62,6 +65,9 @@ const App = () => {
 						);
 					}}
 				/>
+				<Fab>
+					<ShoppingCart />
+				</Fab>
 				<p
 					style={{
 						textAlign: 'center',

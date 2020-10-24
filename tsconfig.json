@@ -14,10 +14,10 @@
 		"isolatedModules": true,
 		"experimentalDecorators": true,
 		"noEmit": true,
-		"noImplicitAny": false,
+		"noImplicitAny": true,
 		"jsx": "react",
 		"typeRoots": ["./node_modules/@types/", "@types", "cypress"]
 	},
-	"include": ["src", "@types"],
+	"include": ["./src/**/*", "@types"],
 	"exclude": ["./cypress"]
 }

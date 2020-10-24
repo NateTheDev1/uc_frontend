@@ -66,7 +66,7 @@ const Navbar = () => {
 							color: page === '/shop' ? '#BB67FF' : '#8F8F8F'
 						}}
 					>
-						Shop (3)
+						Shop
 						{dropDownOpen && (
 							<div
 								onMouseEnter={() => setDropDownOpen(true)}

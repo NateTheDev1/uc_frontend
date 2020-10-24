@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import FaceIcon from '@material-ui/icons/Face';
 import {
 	Button,
@@ -48,7 +48,7 @@ const SignUp = () => {
 		}
 	});
 
-	const handleSubmit = e => {
+	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setError('');
 		setLoading(true);
@@ -132,7 +132,7 @@ const SignUp = () => {
 						required
 						style={{ color: 'black', marginBottom: '10%' }}
 						type="password"
-						value={formDetails.passwords}
+						value={formDetails.password}
 						onChange={e =>
 							setFormDetails({
 								...formDetails,
