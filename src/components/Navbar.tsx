@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 // import logo from '../logo.png';
 import { AccountCircle } from '@material-ui/icons';
 import { Link, useHistory, useLocation } from 'react-router-dom';
-import FadeIn from 'react-fade-in';
+
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
@@ -93,7 +93,7 @@ const Navbar = () => {
 									className="dropdown-link"
 								>
 									<br />
-									Mouse cords
+									Mouse Cables
 								</Link>
 							</div>
 						)}

@@ -8,31 +8,32 @@ import {
 	TextField
 } from '@material-ui/core';
 import { gql, useMutation } from '@apollo/client';
-import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import { LOGIN_OK } from '../../services/types';
+import { RootStateOrAny, useSelector } from 'react-redux';
+
 import { Link, Redirect, useHistory } from 'react-router-dom';
 
-const LOGIN = gql`
-	mutation loginUser($credentials: LoginUserInput!) {
-		loginUser(credentials: $credentials) {
-			token
+const SIGNUP = gql`
+	mutation createUser($user: CreateUserInput!) {
+		createUser(user: $user) {
+			id
 		}
 	}
 `;
 
-const Login = () => {
+const SignUp = () => {
 	const [formDetails, setFormDetails] = useState<{
 		username: string;
 		password: string;
+		name: string;
 	}>({
 		username: '',
-		password: ''
+		password: '',
+		name: ''
 	});
 
-	const [loginUser, { data }] = useMutation(LOGIN);
+	const [loginUser, { data }] = useMutation(SIGNUP);
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
-	const dispatch = useDispatch();
 	const history = useHistory();
 
 	const authenticated = useSelector(
@@ -51,12 +52,12 @@ const Login = () => {
 		e.preventDefault();
 		setError('');
 		setLoading(true);
-		loginUser({ variables: { credentials: formDetails } })
+		loginUser({
+			variables: { user: { ...formDetails, type: 'CUSTOMER' } }
+		})
 			.then(res => {
 				setLoading(false);
-				localStorage.setItem('uc_token', res.data?.loginUser.token);
-				dispatch({ type: LOGIN_OK, payload: res.data?.loginUser });
-				history.push('/');
+				history.push('/login');
 			})
 			.catch(err => {
 				setLoading(false);
@@ -75,15 +76,15 @@ const Login = () => {
 					<FaceIcon
 						style={{ marginBottom: '2%', fontSize: '3rem' }}
 					/>
-					<h1>Login</h1>
+					<h1>Signup</h1>
 					<hr />
 					<p
 						style={{
 							textTransform: 'none'
 						}}
 					>
-						Don't have an account? Sign Up{' '}
-						<Link to="/signup" style={{ color: '#BC67FF' }}>
+						Already't have an account? Login Up{' '}
+						<Link to="/login" style={{ color: '#BC67FF' }}>
 							Here
 						</Link>
 					</p>
@@ -116,6 +117,19 @@ const Login = () => {
 					/>
 					<TextField
 						required
+						style={{ color: 'black', marginBottom: '8%' }}
+						type="text"
+						value={formDetails.name}
+						onChange={e =>
+							setFormDetails({
+								...formDetails,
+								name: e.target.value
+							})
+						}
+						placeholder="Name"
+					/>
+					<TextField
+						required
 						style={{ color: 'black', marginBottom: '10%' }}
 						type="password"
 						value={formDetails.passwords}
@@ -128,8 +142,13 @@ const Login = () => {
 						placeholder="Password"
 					/>
 
-					<Button color="primary" variant="outlined" type="submit">
-						Submit
+					<Button
+						color="primary"
+						variant="outlined"
+						type="submit"
+						disabled={loading}
+					>
+						Get Started
 					</Button>
 					{loading && <LinearProgress color="primary" />}
 				</form>
@@ -138,4 +157,4 @@ const Login = () => {
 	);
 };
 
-export default Login;
+export default SignUp;

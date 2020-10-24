@@ -7,6 +7,7 @@ import Navbar from './components/Navbar';
 import Shop from './pages/Shop';
 import MiceShop from './pages/Mice';
 import Login from './pages/Onboarding/Login';
+import SignUp from './pages/Onboarding/SignUp';
 
 const App = () => {
 	const [page, setPage] = useState('');
@@ -41,6 +42,11 @@ const App = () => {
 										exact
 										path="/login"
 										component={() => <Login />}
+									/>
+									<Route
+										exact
+										path="/signup"
+										component={() => <SignUp />}
 									/>
 									<Route
 										exact
