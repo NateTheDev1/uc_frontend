@@ -3,6 +3,7 @@ import React from 'react';
 import FadeIn from 'react-fade-in';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
+import Admin from './Admin';
 
 const theme = createMuiTheme({
 	palette: {
@@ -29,6 +30,7 @@ const AdminDashboard = () => {
 			<MuiThemeProvider theme={theme}>
 				<FadeIn delay={150} className="admin-set">
 					<h4>Store Settings</h4>
+					<hr />
 					<FadeIn className="settings-container" delay={50}>
 						<div className="setting">
 							<h5>Pause Online Ordering</h5>
@@ -38,17 +40,24 @@ const AdminDashboard = () => {
 							</p>
 							<Switch name="Disable Orders" color="primary" />
 						</div>
-
 						<div className="setting">
-							<h5></h5>
-							<p>
-								Will turn off the ability for users to place
-								orders.
-							</p>
+							<h5>Enable Disount On All Items</h5>
+							<p>Will enable a 10% discount sitewide.</p>
 							<Switch name="Disable Orders" color="primary" />
+						</div>
+						<div className="setting">
+							<h5>Enable Free Shipping</h5>
+							<p>Will enable free shipping sitewide.</p>
+							<Switch
+								name="Disable Orders"
+								color="primary"
+								style={{ margin: 0 }}
+							/>
 						</div>
 					</FadeIn>
 				</FadeIn>
+
+				<Admin />
 			</MuiThemeProvider>
 		</div>
 	);

@@ -22,13 +22,12 @@ const App = () => {
 			<div
 				className={page === '/' ? 'bg-class' : ''}
 				style={{
-					display: 'flex',
 					width: '100%',
 					height: '100%',
-					flexDirection: 'column'
+					margin: 0,
+					padding: 0
 				}}
 			>
-				<Navbar />
 				<Route
 					render={({ location }) => {
 						setPage(location.pathname);
@@ -38,53 +37,48 @@ const App = () => {
 								transitionKey={location.pathname}
 							>
 								<Switch location={location}>
-									<Route
-										exact
-										path="/shop"
-										component={() => <Shop />}
-									/>
-									<Route
-										exact
-										path="/login"
-										component={() => <Login />}
-									/>
-									<Route
-										exact
-										path="/signup"
-										component={() => <SignUp />}
-									/>
-									<Route
-										exact
-										path="/shop/mice"
-										component={() => <MiceShop />}
-									/>
-									<Route
-										exact
-										path="/dashboard"
-										component={() => <AdminDashboard />}
-									/>
+									<Route exact path="/shop">
+										<Navbar /> <Shop />
+									</Route>
+									<Route exact path="/login">
+										<Navbar />
+										<Login />
+									</Route>
+									<Route exact path="/signup">
+										<Navbar /> <SignUp />
+									</Route>
+									<Route exact path="/shop/mice">
+										<Navbar />
+										<MiceShop />
+									</Route>
+									<Route exact path="/dashboard">
+										<Navbar />
+										<AdminDashboard />
+									</Route>
 
-									<Route
-										path="/"
-										component={() => <Home />}
-									/>
+									<Route path="/">
+										<Navbar />
+										<Home />
+									</Route>
 								</Switch>
 							</PageTransition>
 						);
 					}}
 				/>
-
-				<p
-					style={{
-						textAlign: 'center',
-						textTransform: 'uppercase',
-						letterSpacing: '3px',
-						color: '#8F8F8F',
-						fontSize: '0.8rem'
-					}}
-				>
-					Untangled Cables 2020
-				</p>
+				{page !== '/' && (
+					<p
+						style={{
+							textAlign: 'center',
+							textTransform: 'uppercase',
+							marginBottom: '3%',
+							letterSpacing: '3px',
+							color: '#8F8F8F',
+							fontSize: '0.8rem'
+						}}
+					>
+						Untangled Cables 2020
+					</p>
+				)}
 			</div>
 		</Router>
 	);
