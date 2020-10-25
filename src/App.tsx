@@ -12,6 +12,7 @@ import Login from './pages/Onboarding/Login';
 import SignUp from './pages/Onboarding/SignUp';
 
 import { ShoppingCart } from '@material-ui/icons';
+import AdminDashboard from './pages/AdminDashboard';
 
 const App = () => {
 	const [page, setPage] = useState('');
@@ -57,6 +58,12 @@ const App = () => {
 										path="/shop/mice"
 										component={() => <MiceShop />}
 									/>
+									<Route
+										exact
+										path="/dashboard"
+										component={() => <AdminDashboard />}
+									/>
+
 									<Route
 										path="/"
 										component={() => <Home />}

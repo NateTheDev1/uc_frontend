@@ -103,7 +103,7 @@ const Navbar = () => {
 						color="inherit"
 						onClick={() =>
 							authenticated
-								? history.push('/account')
+								? history.push('/dashboard')
 								: history.push('/login')
 						}
 					>

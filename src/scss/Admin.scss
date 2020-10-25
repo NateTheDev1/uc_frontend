@@ -1,0 +1,51 @@
+.admin-dashboard {
+	width: 70%;
+	margin: 0 auto;
+	color: black;
+	margin-top: 2%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+
+	.admin-top {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+
+		hr {
+			margin-left: 0;
+			width: 100%;
+		}
+	}
+
+	h4 {
+		color: #bc67ff;
+		font-size: 1.5rem;
+		text-transform: uppercase;
+		letter-spacing: 2px;
+		text-align: center;
+	}
+
+	.admin-set {
+		margin-top: 5%;
+
+		h5 {
+			font-size: 1.1rem;
+			margin: 0;
+		}
+
+		p {
+			font-size: 0.9rem;
+			color: gray;
+		}
+
+		.settings-container {
+			display: flex;
+		}
+
+		.setting {
+			width: 250px;
+			margin-right: 50px;
+		}
+	}
+}
