@@ -78,3 +78,17 @@
 		}
 	}
 }
+
+.admin-form {
+	h4 {
+		font-size: 0.8rem;
+	}
+
+	.create-form {
+		width: 100%;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+	}
+}

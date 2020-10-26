@@ -9,6 +9,7 @@ import {
 	TableRow
 } from '@material-ui/core';
 import React from 'react';
+import AdminUserForm from '../components/AdminUserForm';
 
 const GET_ADMINS = gql`
 	query {
@@ -35,6 +36,7 @@ const AdminUserTable = () => {
 
 	return (
 		<>
+			<AdminUserForm />
 			<p>
 				{data.adminUsers.length} Admin{' '}
 				{data.adminUsers.length === 1 ? 'User' : 'Users'}
