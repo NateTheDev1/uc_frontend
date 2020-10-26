@@ -32,6 +32,10 @@ body {
 	background: white;
 }
 
+[role='navigation'] {
+	overflow: auto !important;
+}
+
 .navbar-root {
 	margin: 0 auto;
 	max-width: 75%;

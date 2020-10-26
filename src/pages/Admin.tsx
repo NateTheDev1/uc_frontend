@@ -1,4 +1,6 @@
+import { gql, useQuery } from '@apollo/client';
 import {
+	CircularProgress,
 	Paper,
 	Table,
 	TableCell,
@@ -8,47 +10,58 @@ import {
 } from '@material-ui/core';
 import React from 'react';
 
-const admins = [
-	{
-		id: 0,
-		name: 'Nate',
-		type: 'ADMIN',
-		createdAt: new Date(),
-		email: 'nrichards@biggby.com'
-	},
-	{
-		id: 1,
-		name: 'Arik',
-		type: 'ADMIN',
-		createdAt: new Date(),
-		email: 'arik@email.com'
+const GET_ADMINS = gql`
+	query {
+		adminUsers {
+			id
+			name
+			type
+			createdAt
+			username
+		}
 	}
-];
+`;
 
 const AdminUserTable = () => {
+	const { loading, error, data } = useQuery(GET_ADMINS);
+
+	if (loading) {
+		return <CircularProgress />;
+	}
+
+	if (error) {
+		return <p style={{ color: 'red' }}>Error Loading Admin Users.</p>;
+	}
+
 	return (
-		<TableContainer component={Paper}>
-			<Table aria-label="admin users">
-				<TableHead>
-					<TableRow>
-						<TableCell>id</TableCell>
-						<TableCell>Name</TableCell>
-						<TableCell>Role</TableCell>
-						<TableCell>Created At</TableCell>
-						<TableCell>Email</TableCell>
-					</TableRow>
-				</TableHead>
-				{admins.map(user => (
-					<TableRow key={user.id}>
-						<TableCell>{user.id}</TableCell>
-						<TableCell>{user.name}</TableCell>
-						<TableCell>{user.type}</TableCell>
-						<TableCell>{user.createdAt.toString()}</TableCell>
-						<TableCell>{user.email}</TableCell>
-					</TableRow>
-				))}
-			</Table>
-		</TableContainer>
+		<>
+			<p>
+				{data.adminUsers.length} Admin{' '}
+				{data.adminUsers.length === 1 ? 'User' : 'Users'}
+			</p>
+			<TableContainer component={Paper}>
+				<Table aria-label="admin users">
+					<TableHead>
+						<TableRow>
+							<TableCell>id</TableCell>
+							<TableCell>Name</TableCell>
+							<TableCell>Role</TableCell>
+							<TableCell>Created At</TableCell>
+							<TableCell>Email</TableCell>
+						</TableRow>
+					</TableHead>
+					{data.adminUsers.map((user: any) => (
+						<TableRow key={user.id}>
+							<TableCell>{user.id}</TableCell>
+							<TableCell>{user.name}</TableCell>
+							<TableCell>{user.type}</TableCell>
+							<TableCell>{user.createdAt.toString()}</TableCell>
+							<TableCell>{user.username}</TableCell>
+						</TableRow>
+					))}
+				</Table>
+			</TableContainer>
+		</>
 	);
 };
 

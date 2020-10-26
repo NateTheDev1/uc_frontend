@@ -45,15 +45,23 @@ const App = () => {
 										<Login />
 									</Route>
 									<Route exact path="/signup">
-										<Navbar /> <SignUp />
+										<Navbar />
+										<SignUp />
 									</Route>
 									<Route exact path="/shop/mice">
 										<Navbar />
 										<MiceShop />
 									</Route>
 									<Route exact path="/dashboard">
-										<Navbar />
-										<AdminDashboard />
+										<div
+											style={{
+												height: '100%',
+												overflow: 'scroll'
+											}}
+										>
+											<Navbar />
+											<AdminDashboard />
+										</div>
 									</Route>
 
 									<Route path="/">
