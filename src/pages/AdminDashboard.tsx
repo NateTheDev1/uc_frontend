@@ -11,6 +11,7 @@ import FadeIn from 'react-fade-in';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Admin from './Admin';
+import AdminProducts from './AdminProducts';
 
 const theme = createMuiTheme({
 	palette: {
@@ -40,6 +41,7 @@ const AdminDashboard = () => {
 	const [editConfig] = useMutation(EDIT_SETTING);
 	const [saving, setSaving] = useState(false);
 	const { loading, error, data } = useQuery(GET_CONFIG);
+	const [activeArea, setActiveArea] = useState('HOME');
 
 	const [settingsValue, setSettingsValue] = useState({
 		orders: false,
@@ -135,54 +137,80 @@ const AdminDashboard = () => {
 				<h1>Dashboard</h1>
 				<hr />
 			</div>
-			<MuiThemeProvider theme={theme}>
-				<FadeIn delay={150} className="admin-set">
-					<h4>Store Settings</h4>
-					<hr />
-					{!saving ? (
-						<FadeIn className="settings-container" delay={50}>
-							<div className="setting">
-								<h5>Pause Online Ordering</h5>
-								<p>
-									Will turn off the ability for users to place
-									orders.
-								</p>
-								<Switch
-									name="Disable Orders"
-									color="primary"
-									checked={settingsValue.orders}
-									onChange={() => onConfig('orders')}
-								/>
-							</div>
-							<div className="setting">
-								<h5>Enable Disount On All Items</h5>
-								<p>Will enable a 10% discount sitewide.</p>
-								<Switch
-									name="Enable 10% Off"
-									color="primary"
-									checked={settingsValue.discount}
-									onChange={() => onConfig('discount')}
-								/>
-							</div>
-							<div className="setting">
-								<h5>Enable Free Shipping</h5>
-								<p>Will enable free shipping sitewide.</p>
-								<Switch
-									name="Enable free shipping"
-									color="primary"
-									style={{ margin: 0 }}
-									checked={settingsValue.shipping}
-									onChange={() => onConfig('shipping')}
-								/>
-							</div>
-						</FadeIn>
-					) : (
-						<CircularProgress />
-					)}
-				</FadeIn>
 
-				<Admin />
-			</MuiThemeProvider>
+			<div className="settings-nav">
+				<p
+					onClick={() => setActiveArea('HOME')}
+					style={{
+						textDecoration:
+							activeArea === 'HOME' ? 'underline' : 'none'
+					}}
+				>
+					Home
+				</p>
+				<p
+					onClick={() => setActiveArea('PRODUCTS')}
+					style={{
+						textDecoration:
+							activeArea === 'PRODUCTS' ? 'underline' : 'none'
+					}}
+				>
+					Product Management
+				</p>
+			</div>
+
+			{activeArea === 'PRODUCTS' && <AdminProducts />}
+
+			{activeArea === 'HOME' && (
+				<MuiThemeProvider theme={theme}>
+					<FadeIn delay={150} className="admin-set">
+						<h4>Store Settings</h4>
+						<hr />
+						{!saving ? (
+							<FadeIn className="settings-container" delay={50}>
+								<div className="setting">
+									<h5>Pause Online Ordering</h5>
+									<p>
+										Will turn off the ability for users to
+										place orders.
+									</p>
+									<Switch
+										name="Disable Orders"
+										color="primary"
+										checked={settingsValue.orders}
+										onChange={() => onConfig('orders')}
+									/>
+								</div>
+								<div className="setting">
+									<h5>Enable Disount On All Items</h5>
+									<p>Will enable a 10% discount sitewide.</p>
+									<Switch
+										name="Enable 10% Off"
+										color="primary"
+										checked={settingsValue.discount}
+										onChange={() => onConfig('discount')}
+									/>
+								</div>
+								<div className="setting">
+									<h5>Enable Free Shipping</h5>
+									<p>Will enable free shipping sitewide.</p>
+									<Switch
+										name="Enable free shipping"
+										color="primary"
+										style={{ margin: 0 }}
+										checked={settingsValue.shipping}
+										onChange={() => onConfig('shipping')}
+									/>
+								</div>
+							</FadeIn>
+						) : (
+							<CircularProgress />
+						)}
+					</FadeIn>
+
+					<Admin />
+				</MuiThemeProvider>
+			)}
 		</div>
 	);
 };
