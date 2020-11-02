@@ -29,27 +29,30 @@ function amountgen(amount?: number) {
 const testProducts = [
 	{
 		id: 1,
-		name: 'Example Cable',
+		name: 'Example Cable 1',
 		price: 2199,
-		image: '',
+		image:
+			'https://res.cloudinary.com/untangled-cables/image/upload/v1604356615/Chill_etto0q.jpg',
 		enabled: true,
 		description:
 			' Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, quas neque! Quidem deserunt libero quod, cumque architecto voluptatibus sint dolor?'
 	},
 	{
 		id: 2,
-		name: 'Example Cable',
+		name: 'Example Cable 2',
 		price: 2499,
-		image: '',
+		image:
+			'https://res.cloudinary.com/untangled-cables/image/upload/v1604356615/Chill_etto0q.jpg',
 		enabled: true,
 		description:
 			' Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, quas neque! Quidem deserunt libero quod, cumque architecto voluptatibus sint dolor?'
 	},
 	{
 		id: 3,
-		name: 'Example Cable',
+		name: 'Example Cable 3',
 		price: 1899,
-		image: '',
+		image:
+			'https://res.cloudinary.com/untangled-cables/image/upload/v1604356615/Chill_etto0q.jpg',
 		enabled: false,
 		description:
 			' Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, quas neque! Quidem deserunt libero quod, cumque architecto voluptatibus sint dolor?'
@@ -98,7 +101,18 @@ const AdminProducts = () => {
 						</TableRow>
 					</TableHead>
 					{testProducts.map((product: any) => (
-						<TableRow key={product.id}>
+						<TableRow
+							className="product-selection"
+							key={product.id}
+							style={{
+								border:
+									selectedProduct &&
+									selectedProduct[0].id === product.id
+										? '1px solid black'
+										: 'none'
+							}}
+							onClick={() => handleSelectProduct(product.id)}
+						>
 							<TableCell>{product.id}</TableCell>
 							<TableCell>{product.name}</TableCell>
 							<TableCell>{amountgen(product.price)}</TableCell>
@@ -122,9 +136,8 @@ const AdminProducts = () => {
 					No Selected Product. Make A Selection For Product Actions
 				</h3>
 			) : (
-				selectedProduct !== null && (
-					<AdminProductView product={selectedProduct} />
-				)
+				selectedProduct !== null &&
+				!adding && <AdminProductView product={selectedProduct[0]} />
 			)}
 		</div>
 	);
