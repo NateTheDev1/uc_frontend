@@ -8,6 +8,7 @@ import {
 	TableRow
 } from '@material-ui/core';
 import React, { useState } from 'react';
+import FadeIn from 'react-fade-in';
 import AdminProductView from '../components/AdminProductView';
 
 function amountgen(amount?: number) {
@@ -69,7 +70,10 @@ const AdminProducts = () => {
 	};
 
 	return (
-		<div className="admin-products">
+		<div
+			className="admin-products"
+			style={{ marginBottom: '5%', height: '80%' }}
+		>
 			<h4>Product Management</h4>
 			<hr />
 
@@ -90,14 +94,17 @@ const AdminProducts = () => {
 				{testProducts.length} Current{' '}
 				{testProducts.length === 1 ? 'Product' : 'Products'}
 			</p>
-			<TableContainer component={Paper}>
+			<TableContainer
+				component={Paper}
+				style={{ minHeight: '30%', width: '100%' }}
+			>
 				<Table aria-label="admin users">
 					<TableHead>
 						<TableRow>
 							<TableCell>id</TableCell>
 							<TableCell>Name</TableCell>
 							<TableCell>Price</TableCell>
-							<TableCell>Enabled?</TableCell>
+							<TableCell>Enabled</TableCell>
 						</TableRow>
 					</TableHead>
 					{testProducts.map((product: any) => (
@@ -137,7 +144,11 @@ const AdminProducts = () => {
 				</h3>
 			) : (
 				selectedProduct !== null &&
-				!adding && <AdminProductView product={selectedProduct[0]} />
+				!adding && (
+					<div>
+						<AdminProductView product={selectedProduct[0]} />
+					</div>
+				)
 			)}
 		</div>
 	);

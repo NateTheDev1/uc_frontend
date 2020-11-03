@@ -1,5 +1,8 @@
 import { Chip, Paper } from '@material-ui/core';
+
 import React from 'react';
+import FadeIn from 'react-fade-in';
+import EditProductForm from './EditProductForm';
 
 interface ProductViewProps {
 	id: number;
@@ -31,7 +34,7 @@ const AdminProductView = ({ product }: { product: ProductViewProps }) => {
 		<Paper
 			className="product-action-view"
 			elevation={4}
-			style={{ padding: '2%', marginBottom: '3%' }}
+			style={{ padding: '2%', marginBottom: '10%' }}
 		>
 			<div className="top">
 				<img
@@ -39,7 +42,7 @@ const AdminProductView = ({ product }: { product: ProductViewProps }) => {
 					alt={product.name}
 					style={{ borderRadius: '35px' }}
 				/>
-				<div>
+				<FadeIn>
 					<h1>{product.name}</h1>
 					<Chip
 						style={{
@@ -54,8 +57,9 @@ const AdminProductView = ({ product }: { product: ProductViewProps }) => {
 						{amountgen(product.price)}
 					</p>
 					<p>{product.description}</p>
-				</div>
+				</FadeIn>
 			</div>
+			<EditProductForm product={product} />
 		</Paper>
 	);
 };
