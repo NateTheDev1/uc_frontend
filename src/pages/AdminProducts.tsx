@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core';
 import React, { useState } from 'react';
 import FadeIn from 'react-fade-in';
+import AddProductForm from '../components/AddProductForm';
 import AdminProductView from '../components/AdminProductView';
 
 function amountgen(amount?: number) {
@@ -66,6 +67,7 @@ const AdminProducts = () => {
 
 	const handleSelectProduct = (id: number) => {
 		const product = testProducts.filter(product => product.id === id);
+		setAdding(false);
 		setSelectedProduct(product);
 	};
 
@@ -129,7 +131,7 @@ const AdminProducts = () => {
 				</Table>
 			</TableContainer>
 
-			{adding === true && <p>adding a product todo...</p>}
+			{adding === true && <AddProductForm />}
 
 			{selectedProduct === null && adding === false ? (
 				<h3

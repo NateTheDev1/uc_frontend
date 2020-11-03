@@ -9,7 +9,7 @@ import {
 	TextField
 } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 const theme = createMuiTheme({
 	palette: {
@@ -19,32 +19,28 @@ const theme = createMuiTheme({
 	}
 });
 
-const EditProductForm = ({ product }: { product: any }) => {
+const AddProductForm = () => {
 	const [formDetails, setFormDetails] = useState({
-		name: product.name || '',
-		price: product.price || 0.0,
-		description: product.description || '',
-		enabled: product.enabled
+		name: '',
+		price: '',
+		description: '',
+		enabled: false,
+		productGroup: 'MOUSE_CABLES'
 	});
-
-	useEffect(() => {
-		setFormDetails({
-			name: product.name || '',
-			price: product.price || 0.0,
-			description: product.description || '',
-			enabled: product.enabled
-		});
-	}, [product]);
 
 	return (
 		<MuiThemeProvider theme={theme}>
-			<Accordion style={{ marginTop: '3%' }}>
+			<Accordion style={{ marginTop: '3%', marginBottom: '5%' }}>
 				<AccordionSummary
 					expandIcon={<ExpandMore />}
 					aria-controls="edit-user"
 					id="edit-user"
 				>
-					<h5>Edit Product Details</h5>
+					<h5>
+						{formDetails.name.length < 1
+							? 'New Product'
+							: formDetails.name}
+					</h5>
 				</AccordionSummary>
 				<AccordionDetails>
 					<form style={{ width: '100%' }}>
@@ -128,7 +124,7 @@ const EditProductForm = ({ product }: { product: any }) => {
 							}}
 							type="submit"
 						>
-							Save
+							Create
 						</Button>
 					</form>
 				</AccordionDetails>
@@ -137,4 +133,4 @@ const EditProductForm = ({ product }: { product: any }) => {
 	);
 };
 
-export default EditProductForm;
+export default AddProductForm;
