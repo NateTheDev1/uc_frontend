@@ -1,5 +1,7 @@
+import { gql, useQuery } from '@apollo/client';
 import {
 	Button,
+	CircularProgress,
 	Paper,
 	Table,
 	TableCell,
@@ -7,7 +9,7 @@ import {
 	TableHead,
 	TableRow
 } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import FadeIn from 'react-fade-in';
 import AddProductForm from '../components/AddProductForm';
 import AdminProductView from '../components/AdminProductView';
@@ -28,48 +30,41 @@ function amountgen(amount?: number) {
 	return formatter.format(amount);
 }
 
-const testProducts = [
-	{
-		id: 1,
-		name: 'Example Cable 1',
-		price: 2199,
-		image:
-			'https://res.cloudinary.com/untangled-cables/image/upload/v1604356615/Chill_etto0q.jpg',
-		enabled: true,
-		description:
-			' Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, quas neque! Quidem deserunt libero quod, cumque architecto voluptatibus sint dolor?'
-	},
-	{
-		id: 2,
-		name: 'Example Cable 2',
-		price: 2499,
-		image:
-			'https://res.cloudinary.com/untangled-cables/image/upload/v1604356615/Chill_etto0q.jpg',
-		enabled: true,
-		description:
-			' Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, quas neque! Quidem deserunt libero quod, cumque architecto voluptatibus sint dolor?'
-	},
-	{
-		id: 3,
-		name: 'Example Cable 3',
-		price: 1899,
-		image:
-			'https://res.cloudinary.com/untangled-cables/image/upload/v1604356615/Chill_etto0q.jpg',
-		enabled: false,
-		description:
-			' Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, quas neque! Quidem deserunt libero quod, cumque architecto voluptatibus sint dolor?'
+const GET_PRODUCTS = gql`
+	query {
+		allProducts {
+			id
+			name
+			price
+			image
+			enabled
+			description
+		}
 	}
-];
+`;
 
 const AdminProducts = () => {
 	const [selectedProduct, setSelectedProduct] = useState<null | any>(null);
+	const [products, setProducts] = useState<any>([]);
 	const [adding, setAdding] = useState(false);
 
+	const { loading, error, data } = useQuery(GET_PRODUCTS);
+
+	useEffect(() => {
+		if (!loading && data) {
+			setProducts(data.allProducts);
+		}
+	}, [data, loading]);
+
 	const handleSelectProduct = (id: number) => {
-		const product = testProducts.filter(product => product.id === id);
+		const product = products.filter((product: any) => product.id === id);
 		setAdding(false);
 		setSelectedProduct(product);
 	};
+
+	if (loading) {
+		return <CircularProgress />;
+	}
 
 	return (
 		<div
@@ -93,8 +88,8 @@ const AdminProducts = () => {
 				<p>A list of the currently active products</p>
 			</div>
 			<p>
-				{testProducts.length} Current{' '}
-				{testProducts.length === 1 ? 'Product' : 'Products'}
+				{products.length} Current{' '}
+				{products.length === 1 ? 'Product' : 'Products'}
 			</p>
 			<TableContainer
 				component={Paper}
@@ -109,7 +104,7 @@ const AdminProducts = () => {
 							<TableCell>Enabled</TableCell>
 						</TableRow>
 					</TableHead>
-					{testProducts.map((product: any) => (
+					{products.map((product: any) => (
 						<TableRow
 							className="product-selection"
 							key={product.id}
@@ -125,7 +120,7 @@ const AdminProducts = () => {
 							<TableCell>{product.id}</TableCell>
 							<TableCell>{product.name}</TableCell>
 							<TableCell>{amountgen(product.price)}</TableCell>
-							<TableCell>{product.enabled.toString()}</TableCell>
+							<TableCell>{product.enabled}</TableCell>
 						</TableRow>
 					))}
 				</Table>

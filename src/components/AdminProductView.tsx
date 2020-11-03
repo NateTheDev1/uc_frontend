@@ -9,7 +9,7 @@ interface ProductViewProps {
 	name: string;
 	price: number;
 	image: string;
-	enabled: boolean;
+	enabled: string;
 	description: string;
 }
 
@@ -51,7 +51,9 @@ const AdminProductView = ({ product }: { product: ProductViewProps }) => {
 							background: product.enabled ? '#5CB85B' : '#CD2B2F'
 						}}
 						size="medium"
-						label={product.enabled === true ? 'Active' : 'Disabled'}
+						label={
+							product.enabled === 'TRUE' ? 'Active' : 'Disabled'
+						}
 					/>
 					<p style={{ color: '#5CB85B' }}>
 						{amountgen(product.price)}
