@@ -1,15 +1,19 @@
+import { gql, useMutation } from '@apollo/client';
 import {
 	Accordion,
 	AccordionDetails,
 	AccordionSummary,
 	Button,
+	CircularProgress,
 	createMuiTheme,
+	MenuItem,
 	MuiThemeProvider,
+	Select,
 	Switch,
 	TextField
 } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 
 const theme = createMuiTheme({
 	palette: {
@@ -19,14 +23,51 @@ const theme = createMuiTheme({
 	}
 });
 
+const ADD_PRODUCT = gql`
+	mutation createProduct($product: ProductInput!) {
+		createProduct(product: $product) {
+			id
+		}
+	}
+`;
+
 const AddProductForm = () => {
 	const [formDetails, setFormDetails] = useState({
 		name: '',
+		image: '',
 		price: '',
 		description: '',
-		enabled: false,
-		productGroup: 'MOUSE_CABLES'
+		enabled: true,
+		productGroupId: 1
 	});
+	const [loading, setLoading] = useState(false);
+
+	const [createProduct, { data }] = useMutation(ADD_PRODUCT);
+
+	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		setLoading(true);
+		createProduct({
+			variables: {
+				product: {
+					...formDetails,
+					enabled: formDetails.enabled === true ? 'TRUE' : 'FALSE',
+					price: parseInt(formDetails.price.replace('.', ''))
+				}
+			}
+		})
+			.then(res => {
+				setLoading(false);
+				window.location.reload();
+			})
+			.catch(err => {
+				setLoading(false);
+			});
+	};
+
+	if (loading) {
+		return <CircularProgress />;
+	}
 
 	return (
 		<MuiThemeProvider theme={theme}>
@@ -43,7 +84,7 @@ const AddProductForm = () => {
 					</h5>
 				</AccordionSummary>
 				<AccordionDetails>
-					<form style={{ width: '100%' }}>
+					<form style={{ width: '100%' }} onSubmit={handleSubmit}>
 						<p>Product Name</p>
 						<TextField
 							required
@@ -61,6 +102,24 @@ const AddProductForm = () => {
 							}
 							value={formDetails.name}
 							placeholder="Product Name"
+						/>
+						<p>Product Image</p>
+						<TextField
+							required
+							style={{
+								width: '80%',
+								color: 'black',
+								marginBottom: '3%'
+							}}
+							type="text"
+							onChange={e =>
+								setFormDetails({
+									...formDetails,
+									image: e.target.value
+								})
+							}
+							value={formDetails.image}
+							placeholder="https://google.com/sdasdsa.jpg"
 						/>
 						<p>Product Price</p>
 						<TextField
@@ -80,6 +139,20 @@ const AddProductForm = () => {
 							}
 							placeholder="Product Price"
 						/>
+						<p>Product Group</p>
+						<Select
+							style={{ width: '40%', marginBottom: '3%' }}
+							value={formDetails.productGroupId}
+							onChange={e =>
+								setFormDetails({
+									...formDetails,
+									productGroupId: e.target.value as number
+								})
+							}
+						>
+							<MenuItem value={1}>Mouse Cables</MenuItem>
+							<MenuItem value={11}>Keyboard Cables</MenuItem>
+						</Select>
 						<p>Product Description</p>
 						<TextField
 							required

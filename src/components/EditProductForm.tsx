@@ -1,15 +1,17 @@
+import { gql, useMutation } from '@apollo/client';
 import {
 	Accordion,
 	AccordionDetails,
 	AccordionSummary,
 	Button,
+	CircularProgress,
 	createMuiTheme,
 	MuiThemeProvider,
 	Switch,
 	TextField
 } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
-import React, { useEffect, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 
 const theme = createMuiTheme({
 	palette: {
@@ -19,22 +21,65 @@ const theme = createMuiTheme({
 	}
 });
 
+const EDIT_PRODUCT = gql`
+	mutation editProduct($product: EditProductInput!) {
+		editProduct(product: $product) {
+			id
+		}
+	}
+`;
+
 const EditProductForm = ({ product }: { product: any }) => {
+	console.log(product.image);
 	const [formDetails, setFormDetails] = useState({
 		name: product.name || '',
-		price: product.price || 0.0,
+		price: product.price.toString() || '',
 		description: product.description || '',
-		enabled: product.enabled
+		enabled: product.enabled,
+		image: product.image || ''
 	});
+
+	const [editProduct, { data }] = useMutation(EDIT_PRODUCT);
+
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
 		setFormDetails({
 			name: product.name || '',
-			price: product.price || 0.0,
+			price: product.price.toString() || '',
 			description: product.description || '',
-			enabled: product.enabled
+			enabled: product.enabled,
+			image: product.image || ''
 		});
 	}, [product]);
+
+	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		setLoading(true);
+
+		editProduct({
+			variables: {
+				product: {
+					...formDetails,
+					id: product.id,
+					enabled: formDetails.enabled === true ? 'TRUE' : 'FALSE',
+					price: parseInt(formDetails.price.replace('.', '')),
+					image: formDetails.image
+				}
+			}
+		})
+			.then(res => {
+				setLoading(false);
+				window.location.reload();
+			})
+			.catch(err => {
+				setLoading(false);
+			});
+	};
+
+	if (loading) {
+		return <CircularProgress />;
+	}
 
 	return (
 		<MuiThemeProvider theme={theme}>
@@ -47,7 +92,7 @@ const EditProductForm = ({ product }: { product: any }) => {
 					<h5>Edit Product Details</h5>
 				</AccordionSummary>
 				<AccordionDetails>
-					<form style={{ width: '100%' }}>
+					<form style={{ width: '100%' }} onSubmit={handleSubmit}>
 						<p>Product Name</p>
 						<TextField
 							required
@@ -65,6 +110,24 @@ const EditProductForm = ({ product }: { product: any }) => {
 							}
 							value={formDetails.name}
 							placeholder="Product Name"
+						/>
+						<p>Product Image</p>
+						<TextField
+							required
+							style={{
+								width: '80%',
+								color: 'black',
+								marginBottom: '3%'
+							}}
+							type="text"
+							onChange={e =>
+								setFormDetails({
+									...formDetails,
+									image: e.target.value
+								})
+							}
+							value={formDetails.image}
+							placeholder="https://google.com/sdasdsa.jpg"
 						/>
 						<p>Product Price</p>
 						<TextField
