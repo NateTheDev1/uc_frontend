@@ -14,6 +14,7 @@ import SignUp from './pages/Onboarding/SignUp';
 import { ShoppingCart } from '@material-ui/icons';
 import AdminDashboard from './pages/AdminDashboard';
 import ProductPage from './components/ProductPage';
+import Cart from './pages/Cart';
 
 const App = () => {
 	const [page, setPage] = useState('');
@@ -54,8 +55,15 @@ const App = () => {
 										<MiceShop />
 									</Route>
 									<Route exact path="/shop/mice/:id">
-										<Navbar />
-										<ProductPage />
+										<div
+											style={{
+												height: '100%',
+												overflow: 'scroll'
+											}}
+										>
+											<Navbar />
+											<ProductPage />
+										</div>
 									</Route>
 									<Route exact path="/dashboard">
 										<div
@@ -67,6 +75,11 @@ const App = () => {
 											<Navbar />
 											<AdminDashboard />
 										</div>
+									</Route>
+
+									<Route exact path="/cart">
+										<Navbar />
+										<Cart />
 									</Route>
 
 									<Route path="/">

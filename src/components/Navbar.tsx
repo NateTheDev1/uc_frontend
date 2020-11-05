@@ -17,6 +17,9 @@ const Navbar = () => {
 	const [page, setPage] = useState('');
 
 	const dispatch = useDispatch();
+	const cart = useSelector(
+		(state: RootStateOrAny) => state.globalReducer.cart
+	);
 
 	const [dropDownOpen, setDropDownOpen] = useState(false);
 
@@ -125,7 +128,7 @@ const Navbar = () => {
 						onClick={() => history.push('/cart')}
 					>
 						<Badge
-							badgeContent={3}
+							badgeContent={cart.length}
 							style={{
 								color: page === '/' ? '#8F8F8F' : 'black'
 							}}

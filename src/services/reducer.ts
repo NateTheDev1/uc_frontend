@@ -1,9 +1,10 @@
 import { combineReducers } from 'redux';
-import { LOGIN_OK, LOGOUT } from './types';
+import { ADD_TO_CART, LOGIN_OK, LOGOUT } from './types';
 const initialState = {
 	loaded: false,
 	authenticated: localStorage.getItem('uc_token') ? true : false,
-	token: localStorage.getItem('uc_token')
+	token: localStorage.getItem('uc_token'),
+	cart: []
 };
 
 const globalReducer = (state = initialState, action: any) => {
@@ -18,6 +19,11 @@ const globalReducer = (state = initialState, action: any) => {
 			return {
 				...initialState,
 				authenticated: false
+			};
+		case ADD_TO_CART:
+			return {
+				...state,
+				cart: [...state.cart, action.payload]
 			};
 		default:
 			return { ...state };

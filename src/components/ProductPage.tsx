@@ -8,8 +8,12 @@ import {
 	Select,
 	TextField
 } from '@material-ui/core';
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { FormEvent, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory, useParams } from 'react-router-dom';
+import { ADD_TO_CART } from '../services/types';
+
+import shortid from 'shortid';
 
 const GET_PRODUCT = gql`
 	query product($id: ID!) {
@@ -73,11 +77,30 @@ const supported = [
 	'	STEELSERIES  Xai'
 ];
 
+function amountgen(amount?: number) {
+	if (!amount) {
+		amount = 0;
+	}
+
+	amount = amount / 100;
+
+	const formatter = new Intl.NumberFormat('en-US', {
+		style: 'currency',
+		currency: 'USD',
+		minimumFractionDigits: 2
+	});
+
+	return formatter.format(amount);
+}
+
 const ProductPage = () => {
 	let params: any = useParams();
 	const { loading, data, error } = useQuery(GET_PRODUCT, {
 		variables: { id: params.id }
 	});
+
+	const dispatch = useDispatch();
+	const history = useHistory();
 
 	const [mouseSelection, setMouseSelection] = useState(supported[0]);
 	const [quantity, setQuantity] = useState(1);
@@ -85,6 +108,20 @@ const ProductPage = () => {
 	if (loading) {
 		return <CircularProgress />;
 	}
+
+	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		dispatch({
+			type: ADD_TO_CART,
+			payload: {
+				product: { ...data.product },
+				quantity,
+				mouseSelection,
+				cartItemId: shortid()
+			}
+		});
+		history.goBack();
+	};
 
 	return (
 		<MuiThemeProvider theme={theme}>
@@ -94,10 +131,13 @@ const ProductPage = () => {
 
 					<div className="product-details">
 						<h1>{data.product.name}</h1>
+						<p style={{ color: '#5CB85B', fontSize: '1.2rem' }}>
+							{amountgen(data.product.price)}
+						</p>
 
 						<p>{data.product.description}</p>
 
-						<form>
+						<form onSubmit={handleSubmit}>
 							<p style={{ color: 'black' }}>Mouse Selection</p>
 							<Select
 								style={{ width: '100%' }}
@@ -123,6 +163,7 @@ const ProductPage = () => {
 								}
 							/>
 							<Button
+								type="submit"
 								variant="outlined"
 								style={{
 									marginTop: '5%',
