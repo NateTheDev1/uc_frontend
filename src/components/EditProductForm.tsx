@@ -35,7 +35,7 @@ const EditProductForm = ({ product }: { product: any }) => {
 		name: product.name || '',
 		price: product.price.toString() || '',
 		description: product.description || '',
-		enabled: product.enabled,
+		enabled: product.enabled === 'TRUE' ? true : false,
 		image: product.image || ''
 	});
 
@@ -48,7 +48,7 @@ const EditProductForm = ({ product }: { product: any }) => {
 			name: product.name || '',
 			price: product.price.toString() || '',
 			description: product.description || '',
-			enabled: product.enabled,
+			enabled: product.enabled === 'TRUE' ? true : false,
 			image: product.image || ''
 		});
 	}, [product]);

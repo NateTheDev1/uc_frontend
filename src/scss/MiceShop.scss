@@ -2,19 +2,18 @@
 	margin: 0 auto;
 	width: 75%;
 	height: 100%;
+	overflow: scroll;
 	color: black;
-
-	display: flex;
-	align-items: center;
-	flex-direction: column;
+	padding: 2%;
 
 	.mouse-shop-top {
+		margin: 0 auto;
+		text-align: center;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		text-transform: uppercase;
-		margin-top: 5%;
-		margin-bottom: 10%;
+		margin-top: 3%;
 
 		h1 {
 			font-size: 2rem;
@@ -23,6 +22,79 @@
 
 		hr {
 			width: 50%;
+		}
+	}
+
+	.product-grid {
+		padding: 5%;
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		height: 100%;
+		width: 75%;
+
+		margin: 0 auto;
+
+		.product-card {
+			flex-grow: 1;
+			padding: 3%;
+			max-width: 33.3%;
+			flex-basis: 33.3%;
+
+			text-align: center;
+			img {
+				border-radius: 25px;
+				width: 60%;
+			}
+			transition: 0.3s;
+
+			p {
+				color: gray;
+			}
+		}
+
+		.product-card:hover {
+			opacity: 0.8;
+			p {
+				color: #bc67ff;
+			}
+			cursor: pointer;
+		}
+	}
+}
+
+.product-page {
+	margin: 0 auto;
+	margin-top: 5%;
+	width: 50%;
+	height: 100%;
+	color: black;
+
+	.details {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	img {
+		width: 30%;
+		border-radius: 25px;
+	}
+
+	.product-details {
+		color: black;
+		width: 65%;
+
+		h1 {
+			text-transform: uppercase;
+			letter-spacing: 2px;
+			margin-bottom: 5%;
+		}
+
+		p {
+			color: gray;
+			line-height: 3;
+			font-size: 0.9rem;
 		}
 	}
 }

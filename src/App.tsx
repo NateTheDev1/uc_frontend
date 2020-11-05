@@ -13,6 +13,7 @@ import SignUp from './pages/Onboarding/SignUp';
 
 import { ShoppingCart } from '@material-ui/icons';
 import AdminDashboard from './pages/AdminDashboard';
+import ProductPage from './components/ProductPage';
 
 const App = () => {
 	const [page, setPage] = useState('');
@@ -51,6 +52,10 @@ const App = () => {
 									<Route exact path="/shop/mice">
 										<Navbar />
 										<MiceShop />
+									</Route>
+									<Route exact path="/shop/mice/:id">
+										<Navbar />
+										<ProductPage />
 									</Route>
 									<Route exact path="/dashboard">
 										<div
