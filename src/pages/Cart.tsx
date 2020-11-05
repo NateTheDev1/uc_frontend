@@ -25,7 +25,7 @@ const Cart = () => {
 	const calcTotal = () => {
 		let total = 0;
 		for (let i = 0; i < cart.length; i++) {
-			total += cart[0].product.price * cart[0].quantity;
+			total += cart[i].product.price * cart[i].quantity;
 		}
 
 		return total;
@@ -61,26 +61,31 @@ const Cart = () => {
 			</div>
 
 			<div className="cart-details">
-				<h3>Cart Summary</h3>
+				<h3>Cart Summary - {cart.length}</h3>
 				<hr style={{ marginBottom: '5%' }} />
-				{cart.map((item: any) => (
-					<div className="cart-item" key={item.id}>
-						<img src={item.product.image} alt={item.product.name} />
-						<div>
-							<p>{item.product.name}</p>
-							<p>{item.mouseSelection}</p>
+				<div className="cart-items">
+					{cart.map((item: any) => (
+						<div className="cart-item" key={item.id}>
+							<img
+								src={item.product.image}
+								alt={item.product.name}
+							/>
+							<div>
+								<p>{item.product.name}</p>
+								<p>{item.mouseSelection}</p>
+							</div>
+							<p>{item.quantity}</p>
+							<p style={{ color: '#5CB85B' }}>
+								{amountgen(item.product.price)}
+							</p>
+							<p className="remove">X</p>
 						</div>
-						<p>{item.quantity}</p>
-						<p style={{ color: '#5CB85B' }}>
-							{amountgen(item.product.price)}
-						</p>
-						<p className="remove">X</p>
-					</div>
-				))}
+					))}
+				</div>
 				<hr style={{ marginTop: '5%' }} />
 			</div>
 			<div className="cart-bottom">
-				Subtotal - {amountgen(calcTotal())}
+				<p>Subtotal - {amountgen(calcTotal())}</p>
 			</div>
 		</div>
 	);

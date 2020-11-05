@@ -16,9 +16,28 @@
 		margin: 0 auto;
 	}
 
+	.cart-bottom {
+		width: 80%;
+		margin: 0 auto;
+
+		p {
+			color: gray;
+			font-weight: lighter;
+		}
+	}
+
 	.cart-details {
 		width: 80%;
 		margin: 0 auto;
+
+		h3 {
+			font-weight: lighter;
+		}
+	}
+
+	.cart-items {
+		max-height: 300px;
+		overflow: scroll;
 	}
 
 	.cart-item {
@@ -44,6 +63,7 @@
 
 		img {
 			height: 100%;
+			border-radius: 25px;
 		}
 
 		.remove {
