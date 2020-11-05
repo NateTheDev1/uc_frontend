@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { ADD_TO_CART, LOGIN_OK, LOGOUT } from './types';
+import { ADD_TO_CART, LOGIN_OK, LOGOUT, REPLACE_CART } from './types';
 const initialState = {
 	loaded: false,
 	authenticated: localStorage.getItem('uc_token') ? true : false,
@@ -25,6 +25,8 @@ const globalReducer = (state = initialState, action: any) => {
 				...state,
 				cart: [...state.cart, action.payload]
 			};
+		case REPLACE_CART:
+			return { ...state, cart: action.payload.cart };
 		default:
 			return { ...state };
 	}

@@ -1,5 +1,7 @@
 import React from 'react';
-import { RootStateOrAny, useSelector } from 'react-redux';
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { REPLACE_CART } from '../services/types';
 
 function amountgen(amount?: number) {
 	if (!amount) {
@@ -22,6 +24,10 @@ const Cart = () => {
 		(state: RootStateOrAny) => state.globalReducer.cart
 	);
 
+	const dispatch = useDispatch();
+
+	const history = useHistory();
+
 	const calcTotal = () => {
 		let total = 0;
 		for (let i = 0; i < cart.length; i++) {
@@ -29,6 +35,15 @@ const Cart = () => {
 		}
 
 		return total;
+	};
+
+	const handleRemove = (id: number, e: any, cartItemId: string) => {
+		e.stopPropagation();
+		let newCart = cart.filter(
+			(item: any) => item.cartItemId !== cartItemId
+		);
+
+		dispatch({ type: REPLACE_CART, payload: { cart: newCart } });
 	};
 
 	if (cart.length <= 0) {
@@ -65,20 +80,39 @@ const Cart = () => {
 				<hr style={{ marginBottom: '5%' }} />
 				<div className="cart-items">
 					{cart.map((item: any) => (
-						<div className="cart-item" key={item.id}>
+						<div
+							className="cart-item"
+							key={item.product.id}
+							onClick={() =>
+								history.push(`/shop/mice/${item.product.id}`)
+							}
+						>
 							<img
 								src={item.product.image}
 								alt={item.product.name}
 							/>
 							<div>
-								<p>{item.product.name}</p>
+								<p className="anchor-name">
+									{item.product.name}
+								</p>
 								<p>{item.mouseSelection}</p>
 							</div>
 							<p>{item.quantity}</p>
 							<p style={{ color: '#5CB85B' }}>
 								{amountgen(item.product.price)}
 							</p>
-							<p className="remove">X</p>
+							<p
+								className="remove"
+								onClick={e =>
+									handleRemove(
+										item.product.id,
+										e,
+										item.cartItemId
+									)
+								}
+							>
+								X
+							</p>
 						</div>
 					))}
 				</div>

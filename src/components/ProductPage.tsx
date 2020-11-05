@@ -9,9 +9,9 @@ import {
 	TextField
 } from '@material-ui/core';
 import React, { FormEvent, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { ADD_TO_CART } from '../services/types';
+import { ADD_TO_CART, REPLACE_CART } from '../services/types';
 
 import shortid from 'shortid';
 
@@ -99,6 +99,10 @@ const ProductPage = () => {
 		variables: { id: params.id }
 	});
 
+	const cart = useSelector(
+		(state: RootStateOrAny) => state.globalReducer.cart
+	);
+
 	const dispatch = useDispatch();
 	const history = useHistory();
 
@@ -111,15 +115,54 @@ const ProductPage = () => {
 
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		dispatch({
-			type: ADD_TO_CART,
-			payload: {
-				product: { ...data.product },
-				quantity,
-				mouseSelection,
-				cartItemId: shortid()
+
+		const founditem = cart.find(
+			(item: any) => item.product.id === params.id
+		);
+
+		if (!founditem) {
+			dispatch({
+				type: ADD_TO_CART,
+				payload: {
+					product: { ...data.product },
+					quantity,
+					mouseSelection,
+					cartItemId: shortid()
+				}
+			});
+		} else {
+			let newCart: any = [];
+			let mouseChanged = false;
+
+			for (let i = 0; i < cart.length; i++) {
+				if (cart[i].mouseSelection !== mouseSelection) {
+					mouseChanged = true;
+					break;
+				}
+
+				if (cart[i].product.id === data.product.id) {
+					cart[i].quantity += quantity;
+					newCart.push(cart[i]);
+				} else {
+					newCart.push(cart[i]);
+				}
 			}
-		});
+
+			if (mouseChanged) {
+				dispatch({
+					type: ADD_TO_CART,
+					payload: {
+						product: { ...data.product },
+						quantity,
+						mouseSelection,
+						cartItemId: shortid()
+					}
+				});
+			} else {
+				dispatch({ type: REPLACE_CART, payload: { cart: newCart } });
+			}
+		}
+
 		history.goBack();
 	};
 

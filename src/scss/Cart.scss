@@ -46,6 +46,12 @@
 		height: 100px;
 		display: flex;
 		justify-content: space-between;
+		border-left: 1px solid white;
+		transition: 0.3s;
+
+		.anchor-name {
+			transition: 0.5s;
+		}
 
 		div {
 			width: 25%;
@@ -75,6 +81,15 @@
 		.remove:hover {
 			opacity: 0.5;
 			cursor: pointer;
+		}
+	}
+
+	.cart-item:hover {
+		border-left: 1px solid black;
+		cursor: pointer;
+
+		.anchor-name {
+			color: #bc67ff;
 		}
 	}
 }
