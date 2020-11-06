@@ -1,3 +1,4 @@
+import { gql, useMutation } from '@apollo/client';
 import {
 	Button,
 	createMuiTheme,
@@ -41,10 +42,21 @@ const theme = createMuiTheme({
 	}
 });
 
+const CREATE_ORDER = gql`
+	mutation createOrder($order: OrderInput!) {
+		createOrder(order: $order) {
+			id
+			valid
+		}
+	}
+`;
+
 const Payment = () => {
 	const cart = useSelector(
 		(state: RootStateOrAny) => state.globalReducer.cart
 	);
+
+	const [charge] = useMutation(CREATE_ORDER);
 
 	const stripe = useStripe();
 	const elements = useElements();
@@ -84,17 +96,36 @@ const Payment = () => {
 
 			const { id } = paymentMethod;
 
+			const newCart = [];
+
+			for (let i = 0; i < cart.length; i++) {
+				newCart.push({
+					name: cart[i].product.name,
+					quantity: cart[i].quantity
+				});
+			}
+
 			// Submit to backend
 			const payment = {
 				id,
 				amount: calcTotal(),
 				user: {
 					email: 'nrichards@biggby.com',
-					name: 'Nathaniel Richards'
+					name: 'Nathaniel Richards',
+					id: 1
 				},
+				cart: newCart,
 				shipping: { ...formDetails },
 				description: `Online Order for ${amountgen(calcTotal())}`
 			};
+
+			charge({ variables: { order: payment } })
+				.then((res: any) => {
+					history.push(`/confirm/${res.data.createOrder.id}`);
+				})
+				.catch((err: any) => {
+					setPaymentError(err.message);
+				});
 
 			console.log(payment);
 
