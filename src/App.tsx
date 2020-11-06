@@ -11,10 +11,17 @@ import MiceShop from './pages/Mice';
 import Login from './pages/Onboarding/Login';
 import SignUp from './pages/Onboarding/SignUp';
 
-import { ShoppingCart } from '@material-ui/icons';
 import AdminDashboard from './pages/AdminDashboard';
 import ProductPage from './components/ProductPage';
 import Cart from './pages/Cart';
+import Payment from './pages/Payment';
+
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
+
+const stripePromise: any = loadStripe(
+	process.env.REACT_APP_PUBLISHABLE_STRIPE_KEY!
+);
 
 const App = () => {
 	const [page, setPage] = useState('');
@@ -80,6 +87,20 @@ const App = () => {
 									<Route exact path="/cart">
 										<Navbar />
 										<Cart />
+									</Route>
+
+									<Route exact path="/cart/payment">
+										<div
+											style={{
+												height: '100%',
+												overflow: 'scroll'
+											}}
+										>
+											<Navbar />
+											<Elements stripe={stripePromise}>
+												<Payment />
+											</Elements>
+										</div>
 									</Route>
 
 									<Route path="/">
