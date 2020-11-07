@@ -105,6 +105,41 @@ body {
 	}
 }
 
+@media (max-width: 1050px) {
+	.navbar-root {
+		max-width: 100% !important;
+		width: 100%;
+		margin: 0 auto;
+	}
+}
+
+@media (max-width: 800px) {
+	.navbar-root {
+		.navbar {
+			flex-direction: column;
+		}
+
+		max-width: 100% !important;
+		.nav-left {
+			justify-content: center;
+			width: 100%;
+		}
+
+		.nav-left {
+			width: 100% !important;
+		}
+
+		.nav-left h4 {
+			font-size: 1rem;
+		}
+
+		.nav-right {
+			width: 100% !important;
+			justify-content: space-evenly !important;
+		}
+	}
+}
+
 .dropdown-link {
 	width: 100% !important;
 	font-size: 0.9rem !important;

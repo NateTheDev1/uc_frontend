@@ -18,6 +18,7 @@ import Payment from './pages/Payment';
 
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
+import OrderConfirmation from './pages/OrderConfirmation';
 
 const stripePromise: any = loadStripe(
 	process.env.REACT_APP_PUBLISHABLE_STRIPE_KEY!
@@ -47,19 +48,47 @@ const App = () => {
 							>
 								<Switch location={location}>
 									<Route exact path="/shop">
-										<Navbar /> <Shop />
+										<div
+											style={{
+												height: '100%',
+												overflow: 'scroll'
+											}}
+										>
+											<Navbar /> <Shop />
+										</div>
 									</Route>
 									<Route exact path="/login">
-										<Navbar />
-										<Login />
+										<div
+											style={{
+												height: '100%',
+												overflow: 'scroll'
+											}}
+										>
+											<Navbar />
+											<Login />
+										</div>
 									</Route>
 									<Route exact path="/signup">
-										<Navbar />
-										<SignUp />
+										<div
+											style={{
+												height: '100%',
+												overflow: 'scroll'
+											}}
+										>
+											<Navbar />
+											<SignUp />
+										</div>
 									</Route>
 									<Route exact path="/shop/mice">
-										<Navbar />
-										<MiceShop />
+										<div
+											style={{
+												height: '100%',
+												overflow: 'scroll'
+											}}
+										>
+											<Navbar />
+											<MiceShop />
+										</div>
 									</Route>
 									<Route exact path="/shop/mice/:id">
 										<div
@@ -103,9 +132,28 @@ const App = () => {
 										</div>
 									</Route>
 
+									<Route exact path="/confirm/:id">
+										<div
+											style={{
+												height: '100%',
+												overflow: 'scroll'
+											}}
+										>
+											<Navbar />
+											<OrderConfirmation />
+										</div>
+									</Route>
+
 									<Route path="/">
-										<Navbar />
-										<Home />
+										<div
+											style={{
+												height: '100%',
+												overflow: 'scroll'
+											}}
+										>
+											<Navbar />
+											<Home />
+										</div>
 									</Route>
 								</Switch>
 							</PageTransition>

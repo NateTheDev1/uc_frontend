@@ -33,6 +33,10 @@ const Cart = () => {
 		(state: RootStateOrAny) => state.globalReducer.cart
 	);
 
+	const authenticated = useSelector(
+		(state: RootStateOrAny) => state.globalReducer.authenticated
+	);
+
 	const dispatch = useDispatch();
 
 	const history = useHistory();
@@ -133,12 +137,14 @@ const Cart = () => {
 				<div className="cart-bottom">
 					<p>Subtotal - {amountgen(calcTotal())}</p>
 					<Button
+						disabled={authenticated ? false : true}
 						onClick={() => history.push('/cart/payment')}
 						variant="outlined"
 						style={{
 							width: '100%',
 							marginTop: '3%',
-							color: '#5CB85B'
+							color: '#5CB85B',
+							opacity: authenticated ? 1.0 : 0.5
 						}}
 					>
 						Payment Details

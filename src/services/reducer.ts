@@ -1,10 +1,19 @@
 import { combineReducers } from 'redux';
-import { ADD_TO_CART, LOGIN_OK, LOGOUT, REPLACE_CART } from './types';
+import {
+	ADD_TO_CART,
+	LOGIN_OK,
+	LOGOUT,
+	REPLACE_CART,
+	SET_ORDER
+} from './types';
 const initialState = {
 	loaded: false,
 	authenticated: localStorage.getItem('uc_token') ? true : false,
 	token: localStorage.getItem('uc_token'),
-	cart: []
+	cart: [],
+	userId: localStorage.getItem('uc_userId'),
+	userType: 'CUSTOMER',
+	orderId: null
 };
 
 const globalReducer = (state = initialState, action: any) => {
@@ -13,7 +22,9 @@ const globalReducer = (state = initialState, action: any) => {
 			return {
 				...state,
 				authenticated: true,
-				token: action.payload?.token
+				token: action.payload.token,
+				userId: action.payload.user.id,
+				userType: action.payload.type
 			};
 		case LOGOUT:
 			return {
@@ -27,6 +38,8 @@ const globalReducer = (state = initialState, action: any) => {
 			};
 		case REPLACE_CART:
 			return { ...state, cart: action.payload.cart };
+		case SET_ORDER:
+			return { ...state, orderId: action.payload.orderId };
 		default:
 			return { ...state };
 	}

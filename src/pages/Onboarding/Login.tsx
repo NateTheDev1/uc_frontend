@@ -16,6 +16,9 @@ const LOGIN = gql`
 	mutation loginUser($credentials: LoginUserInput!) {
 		loginUser(credentials: $credentials) {
 			token
+			user {
+				id
+			}
 		}
 	}
 `;
@@ -55,6 +58,8 @@ const Login = () => {
 			.then(res => {
 				setLoading(false);
 				localStorage.setItem('uc_token', res.data?.loginUser.token);
+				localStorage.setItem('uc_userId', res.data?.loginUser.user.id);
+
 				dispatch({ type: LOGIN_OK, payload: res.data?.loginUser });
 				history.push('/');
 			})

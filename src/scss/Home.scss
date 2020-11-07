@@ -52,3 +52,32 @@
 		}
 	}
 }
+
+@media (max-width: 1050px) {
+	.home-root {
+		width: 90%;
+	}
+}
+
+@media (max-width: 800px) {
+	.home-left {
+		margin-top: 10%;
+
+		img {
+			width: 30% !important;
+		}
+
+		h1 {
+			font-size: 1.3rem;
+		}
+
+		p {
+			font-size: 1rem !important;
+		}
+
+		button {
+			width: 80% !important;
+			font-size: 0.9rem;
+		}
+	}
+}

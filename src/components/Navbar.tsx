@@ -10,11 +10,26 @@ import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { LOGOUT } from '../services/types';
+import { gql, useQuery } from '@apollo/client';
+
+const GET_USER = gql`
+	query getUser($id: ID!) {
+		getUser(id: $id) {
+			type
+		}
+	}
+`;
 
 const Navbar = () => {
 	const location = useLocation();
 	const history = useHistory();
 	const [page, setPage] = useState('');
+
+	const userId = useSelector(
+		(state: RootStateOrAny) => state.globalReducer.userId
+	);
+
+	const getUser = useQuery(GET_USER, { variables: { id: userId } });
 
 	const dispatch = useDispatch();
 	const cart = useSelector(
@@ -33,6 +48,8 @@ const Navbar = () => {
 
 	const handleLogout = () => {
 		localStorage.removeItem('uc_token');
+		localStorage.removeItem('uc_userId');
+		localStorage.removeItem('uc_userType');
 		dispatch({ type: LOGOUT });
 		window.location.reload();
 	};
@@ -52,14 +69,14 @@ const Navbar = () => {
 						Home
 					</Link>
 
-					<Link
+					{/* <Link
 						to="/contact"
 						style={{
 							color: page === '/contact' ? '#BB67FF' : '#8F8F8F'
 						}}
 					>
 						Contact
-					</Link>
+					</Link> */}
 
 					<Link
 						to="/shop"
@@ -102,26 +119,49 @@ const Navbar = () => {
 						)}
 					</Link>
 
-					<IconButton
-						color="inherit"
-						onClick={() =>
-							authenticated
-								? history.push('/dashboard')
-								: history.push('/login')
-						}
-					>
-						<AccountCircle
-							style={{
-								color:
-									page === '/login' ||
-									page === '/account' ||
-									page === '/signup'
-										? '#BB67FF'
-										: 'black'
-							}}
-							className="nav-icon"
-						/>
-					</IconButton>
+					{getUser && getUser.data?.getUser.type === 'ADMIN' ? (
+						<IconButton
+							color="inherit"
+							onClick={() =>
+								authenticated
+									? history.push('/dashboard')
+									: history.push('/login')
+							}
+						>
+							<AccountCircle
+								style={{
+									color:
+										page === '/login' ||
+										page === '/account' ||
+										page === '/signup'
+											? '#BB67FF'
+											: 'black'
+								}}
+								className="nav-icon"
+							/>
+						</IconButton>
+					) : (
+						<IconButton
+							color="inherit"
+							onClick={() =>
+								authenticated
+									? history.push('/dashboard')
+									: history.push('/login')
+							}
+						>
+							<AccountCircle
+								style={{
+									color:
+										page === '/login' ||
+										page === '/account' ||
+										page === '/signup'
+											? '#BB67FF'
+											: 'black'
+								}}
+								className="nav-icon"
+							/>
+						</IconButton>
+					)}
 
 					<IconButton
 						color="inherit"

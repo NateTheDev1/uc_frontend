@@ -21,6 +21,14 @@ const theme = createMuiTheme({
 	}
 });
 
+const GET_USER = gql`
+	query getUser($id: ID!) {
+		getUser(id: $id) {
+			type
+		}
+	}
+`;
+
 const EDIT_SETTING = gql`
 	mutation($config: ConfigInput!) {
 		editConfig(config: $config)
@@ -38,9 +46,13 @@ const GET_CONFIG = gql`
 `;
 
 const AdminDashboard = () => {
+	const userId = useSelector(
+		(state: RootStateOrAny) => state.globalReducer.userId
+	);
 	const [editConfig] = useMutation(EDIT_SETTING);
 	const [saving, setSaving] = useState(false);
 	const { loading, error, data } = useQuery(GET_CONFIG);
+	const getUser = useQuery(GET_USER, { variables: { id: userId } });
 	const [activeArea, setActiveArea] = useState('HOME');
 
 	const [settingsValue, setSettingsValue] = useState({
@@ -130,6 +142,10 @@ const AdminDashboard = () => {
 			}).then(() => setSaving(false));
 		}
 	};
+
+	if (getUser.data && getUser.data.getUser.type === 'CUSTOMER') {
+		return <Redirect to="/" />;
+	}
 
 	return (
 		<div className="admin-dashboard">

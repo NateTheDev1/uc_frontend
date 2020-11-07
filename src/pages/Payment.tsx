@@ -1,4 +1,4 @@
-import { gql, useMutation } from '@apollo/client';
+import { gql, useMutation, useQuery } from '@apollo/client';
 import {
 	Button,
 	createMuiTheme,
@@ -15,8 +15,9 @@ import {
 } from '@stripe/react-stripe-js';
 
 import React, { useState } from 'react';
-import { RootStateOrAny, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+import { Redirect, useHistory } from 'react-router-dom';
+import { REPLACE_CART, SET_ORDER } from '../services/types';
 
 function amountgen(amount?: number) {
 	if (!amount) {
@@ -51,12 +52,29 @@ const CREATE_ORDER = gql`
 	}
 `;
 
+const GET_USER = gql`
+	query getUser($id: ID!) {
+		getUser(id: $id) {
+			name
+			username
+			id
+		}
+	}
+`;
+
 const Payment = () => {
 	const cart = useSelector(
 		(state: RootStateOrAny) => state.globalReducer.cart
 	);
 
+	const userId = useSelector(
+		(state: RootStateOrAny) => state.globalReducer.userId
+	);
+
 	const [charge] = useMutation(CREATE_ORDER);
+	const { loading, error, data } = useQuery(GET_USER, {
+		variables: { id: userId }
+	});
 
 	const stripe = useStripe();
 	const elements = useElements();
@@ -68,6 +86,7 @@ const Payment = () => {
 	});
 
 	const history = useHistory();
+	const dispatch = useDispatch();
 
 	const [verifyingPayment, setVerifying] = useState(false);
 	const [paymentError, setPaymentError] = useState('');
@@ -101,7 +120,8 @@ const Payment = () => {
 			for (let i = 0; i < cart.length; i++) {
 				newCart.push({
 					name: cart[i].product.name,
-					quantity: cart[i].quantity
+					quantity: cart[i].quantity,
+					mouse: cart[i].mouseSelection
 				});
 			}
 
@@ -110,9 +130,9 @@ const Payment = () => {
 				id,
 				amount: calcTotal(),
 				user: {
-					email: 'nrichards@biggby.com',
-					name: 'Nathaniel Richards',
-					id: 1
+					email: data?.getUser.username,
+					name: data?.getUser.name,
+					id: parseInt(userId)
 				},
 				cart: newCart,
 				shipping: { ...formDetails },
@@ -121,17 +141,24 @@ const Payment = () => {
 
 			charge({ variables: { order: payment } })
 				.then((res: any) => {
+					dispatch({ type: REPLACE_CART, payload: { cart: [] } });
+					dispatch({
+						type: SET_ORDER,
+						payload: { orderId: res.data?.createOrder?.id }
+					});
+					setVerifying(false);
 					history.push(`/confirm/${res.data.createOrder.id}`);
 				})
 				.catch((err: any) => {
+					setVerifying(false);
 					setPaymentError(err.message);
 				});
-
-			console.log(payment);
-
-			setVerifying(false);
 		}
 	};
+
+	if (!userId) {
+		return <Redirect to="/login" />;
+	}
 
 	return (
 		<MuiThemeProvider theme={theme}>
