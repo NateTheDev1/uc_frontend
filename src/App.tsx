@@ -114,8 +114,15 @@ const App = () => {
 									</Route>
 
 									<Route exact path="/cart">
-										<Navbar />
-										<Cart />
+										<div
+											style={{
+												height: '100%',
+												overflow: 'scroll'
+											}}
+										>
+											<Navbar />
+											<Cart />
+										</div>
 									</Route>
 
 									<Route exact path="/cart/payment">

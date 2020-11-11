@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import card from '../creditcard.svg';
 
 const OrderConfirmation = () => {
@@ -21,6 +21,16 @@ const OrderConfirmation = () => {
 				<h1>You Order Has Been Placed!</h1>
 				<h4>Order Id: {params.id}ucPK3dAfWkfD</h4>
 			</div>
+			<Link
+				to="/"
+				style={{
+					color: '#BB67FF',
+					fontSize: '1.2rem'
+				}}
+				className="done-link"
+			>
+				Done
+			</Link>
 		</div>
 	);
 };

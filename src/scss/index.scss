@@ -160,3 +160,11 @@ body {
 	background-repeat: no-repeat;
 	background-size: cover;
 }
+
+.done-link {
+	text-decoration: underline;
+}
+
+.done-link:hover {
+	cursor: pointer;
+}

@@ -170,10 +170,9 @@ const ProductPage = () => {
 		<MuiThemeProvider theme={theme}>
 			<div className="product-page">
 				<div className="details">
-					<img src={data.product.image} alt={data.product.name} />
-
 					<div className="product-details">
 						<h1>{data.product.name}</h1>
+
 						<p style={{ color: '#5CB85B', fontSize: '1.2rem' }}>
 							{amountgen(data.product.price)}
 						</p>
@@ -204,6 +203,11 @@ const ProductPage = () => {
 								onChange={e =>
 									setQuantity(parseInt(e.target.value))
 								}
+							/>
+							<p>Color</p>
+							<img
+								src={data.product.image}
+								alt={data.product.name}
 							/>
 							<Button
 								type="submit"
