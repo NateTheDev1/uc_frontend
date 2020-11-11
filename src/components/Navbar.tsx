@@ -1,4 +1,10 @@
-import { AppBar, Badge, IconButton, Toolbar } from '@material-ui/core';
+import {
+	AppBar,
+	Badge,
+	CircularProgress,
+	IconButton,
+	Toolbar
+} from '@material-ui/core';
 
 import React, { useState, useEffect } from 'react';
 
@@ -14,7 +20,7 @@ import { gql, useQuery } from '@apollo/client';
 
 const GET_USER = gql`
 	query getUser($id: ID!) {
-		getUser(id: $id) {
+		user(userId: $id) {
 			type
 		}
 	}
@@ -53,6 +59,10 @@ const Navbar = () => {
 		dispatch({ type: LOGOUT });
 		window.location.reload();
 	};
+
+	if (getUser.loading) {
+		return <CircularProgress />;
+	}
 
 	return (
 		<AppBar elevation={0} position="static" className="navbar-root">
@@ -119,7 +129,7 @@ const Navbar = () => {
 						)}
 					</Link>
 
-					{getUser && getUser.data?.getUser.type === 'ADMIN' ? (
+					{getUser && getUser.data?.user.type === 'ADMIN' ? (
 						<IconButton
 							color="inherit"
 							onClick={() =>
@@ -141,26 +151,25 @@ const Navbar = () => {
 							/>
 						</IconButton>
 					) : (
-						<IconButton
-							color="inherit"
-							onClick={() =>
-								authenticated
-									? history.push('/dashboard')
-									: history.push('/login')
-							}
-						>
-							<AccountCircle
-								style={{
-									color:
-										page === '/login' ||
-										page === '/account' ||
-										page === '/signup'
-											? '#BB67FF'
-											: 'black'
-								}}
-								className="nav-icon"
-							/>
-						</IconButton>
+						getUser.data?.user.type === 'ADMIN' ||
+						(!authenticated && (
+							<IconButton
+								color="inherit"
+								onClick={() => history.push('/login')}
+							>
+								<AccountCircle
+									style={{
+										color:
+											page === '/login' ||
+											page === '/account' ||
+											page === '/signup'
+												? '#BB67FF'
+												: 'black'
+									}}
+									className="nav-icon"
+								/>
+							</IconButton>
+						))
 					)}
 
 					<IconButton

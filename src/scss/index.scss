@@ -135,7 +135,13 @@ body {
 
 		.nav-right {
 			width: 100% !important;
-			justify-content: space-evenly !important;
+
+			justify-content: space-around !important;
+
+			a {
+				width: 25%;
+				margin-right: 0 !important;
+			}
 		}
 	}
 }

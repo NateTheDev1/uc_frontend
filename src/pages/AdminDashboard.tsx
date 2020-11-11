@@ -23,7 +23,7 @@ const theme = createMuiTheme({
 
 const GET_USER = gql`
 	query getUser($id: ID!) {
-		getUser(id: $id) {
+		user(userId: $id) {
 			type
 		}
 	}
@@ -143,7 +143,7 @@ const AdminDashboard = () => {
 		}
 	};
 
-	if (getUser.data && getUser.data.getUser.type === 'CUSTOMER') {
+	if (getUser.data && getUser.data.user.type === 'CUSTOMER') {
 		return <Redirect to="/" />;
 	}
 

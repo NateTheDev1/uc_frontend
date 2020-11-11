@@ -7,7 +7,6 @@ import { Provider } from 'react-redux';
 
 import client from './client';
 import store from './store';
-
 import LogRocket from 'logrocket';
 import { ApolloProvider } from '@apollo/client';
 import App from './App';

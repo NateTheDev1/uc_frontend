@@ -14,7 +14,7 @@ import {
 	useStripe
 } from '@stripe/react-stripe-js';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
 import { REPLACE_CART, SET_ORDER } from '../services/types';
@@ -54,7 +54,7 @@ const CREATE_ORDER = gql`
 
 const GET_USER = gql`
 	query getUser($id: ID!) {
-		getUser(id: $id) {
+		user(userId: $id) {
 			name
 			username
 			id
@@ -100,20 +100,22 @@ const Payment = () => {
 		return total;
 	};
 
+	useEffect(() => {
+		console.log(data, error);
+	}, [data, error]);
+
 	const handlePayment = async (e: any) => {
 		e.preventDefault();
 
-		const { error, paymentMethod }: any = await stripe?.createPaymentMethod(
-			{
-				type: 'card',
-				card: elements?.getElement(CardElement)!
-			}
-		);
+		const STRIPE_RES: any = await stripe?.createPaymentMethod({
+			type: 'card',
+			card: elements?.getElement(CardElement)!
+		});
 
-		if (!error) {
+		if (!STRIPE_RES.error) {
 			setVerifying(true);
 
-			const { id } = paymentMethod;
+			const { id } = STRIPE_RES.paymentMethod;
 
 			const newCart = [];
 
@@ -130,9 +132,9 @@ const Payment = () => {
 				id,
 				amount: calcTotal(),
 				user: {
-					email: data?.getUser.username,
-					name: data?.getUser.name,
-					id: parseInt(userId)
+					email: data?.user.username,
+					name: data?.user.name,
+					id: userId.toString()
 				},
 				cart: newCart,
 				shipping: { ...formDetails },
@@ -257,12 +259,14 @@ const Payment = () => {
 						/>
 					</div>
 					<Button
+						disabled={verifyingPayment}
 						type="submit"
 						variant="outlined"
 						style={{
 							marginTop: '3%',
 							width: '100%',
-							color: '#5CB85B'
+							color: '#5CB85B',
+							opacity: verifyingPayment ? '0.3' : 1
 						}}
 					>
 						Pay Now
