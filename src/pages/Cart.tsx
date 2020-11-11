@@ -60,7 +60,6 @@ const Cart = () => {
 	};
 
 	if (cart.length <= 0) {
-		console.log('hello');
 		return (
 			<div className="cart">
 				<div className="cart-top">

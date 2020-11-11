@@ -214,6 +214,7 @@ const ProductPage = () => {
 								variant="outlined"
 								style={{
 									marginTop: '5%',
+									marginBottom: '5%',
 									width: '100%',
 									background: '#BC67FF',
 									color: 'white'

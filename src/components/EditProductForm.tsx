@@ -30,7 +30,6 @@ const EDIT_PRODUCT = gql`
 `;
 
 const EditProductForm = ({ product }: { product: any }) => {
-	console.log(product.image);
 	const [formDetails, setFormDetails] = useState({
 		name: product.name || '',
 		price: product.price.toString() || '',

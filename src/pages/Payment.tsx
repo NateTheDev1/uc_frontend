@@ -100,10 +100,6 @@ const Payment = () => {
 		return total;
 	};
 
-	useEffect(() => {
-		console.log(data, error);
-	}, [data, error]);
-
 	const handlePayment = async (e: any) => {
 		e.preventDefault();
 

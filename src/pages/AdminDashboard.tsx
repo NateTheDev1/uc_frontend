@@ -63,7 +63,6 @@ const AdminDashboard = () => {
 
 	useEffect(() => {
 		if (!loading && data) {
-			console.log(data.getConfig[1]);
 			setSettingsValue({
 				...settingsValue,
 				orders: data.getConfig[0].value === 'ON' ? true : false,
