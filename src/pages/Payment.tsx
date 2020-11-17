@@ -82,7 +82,8 @@ const Payment = () => {
 	const [formDetails, setFormDetails] = useState({
 		zip: '',
 		address: '',
-		state: ''
+		state: '',
+		country: 'United States'
 	});
 
 	const history = useHistory();
@@ -91,8 +92,18 @@ const Payment = () => {
 	const [verifyingPayment, setVerifying] = useState(false);
 	const [paymentError, setPaymentError] = useState('');
 
-	const calcTotal = () => {
-		let total = 0;
+	const [canada, setCanada] = useState(false);
+
+	useEffect(() => {
+		if (formDetails.country.toLowerCase() === 'united states') {
+			setCanada(false);
+		} else {
+			setCanada(true);
+		}
+	}, [formDetails.country]);
+
+	const calcTotal = (additional?: number) => {
+		let total = additional ? additional : 0;
 		for (let i = 0; i < cart.length; i++) {
 			total += cart[i].product.price * cart[i].quantity;
 		}
@@ -165,7 +176,10 @@ const Payment = () => {
 					<IconButton onClick={() => history.goBack()}>
 						<ArrowBack />
 					</IconButton>
-					<h1>Payment Details - {amountgen(calcTotal())}</h1>
+					<h1>
+						Payment Details -{' '}
+						{amountgen(calcTotal(canada ? 1000 : 0))}
+					</h1>
 
 					<hr />
 					<p className="description">
@@ -218,6 +232,7 @@ const Payment = () => {
 					/>
 
 					<p>State</p>
+
 					<TextField
 						variant="filled"
 						required
@@ -236,6 +251,37 @@ const Payment = () => {
 						type="text"
 						placeholder="Michigan"
 					/>
+
+					<p>Country</p>
+					{canada && (
+						<p
+							style={{
+								color: 'red',
+								fontSize: '0.8rem'
+							}}
+						>
+							10.00 Shipping Fee For International Shipping
+						</p>
+					)}
+					<TextField
+						variant="filled"
+						required
+						value={formDetails.country}
+						onChange={(e: any) =>
+							setFormDetails({
+								...formDetails,
+								country: e.target.value
+							})
+						}
+						style={{
+							width: '100%',
+							color: 'black',
+							marginBottom: '3%'
+						}}
+						type="text"
+						placeholder="United States"
+					/>
+
 					<div className="card-details">
 						<p>Card Details</p>
 						<CardElement

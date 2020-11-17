@@ -19,6 +19,7 @@ import Payment from './pages/Payment';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import OrderConfirmation from './pages/OrderConfirmation';
+import Faq from './pages/Faq';
 
 const stripePromise: any = loadStripe(
 	process.env.REACT_APP_PUBLISHABLE_STRIPE_KEY!
@@ -148,6 +149,18 @@ const App = () => {
 										>
 											<Navbar />
 											<OrderConfirmation />
+										</div>
+									</Route>
+
+									<Route path="/faq">
+										<div
+											style={{
+												height: '100%',
+												overflow: 'scroll'
+											}}
+										>
+											<Navbar />
+											<Faq />
 										</div>
 									</Route>
 

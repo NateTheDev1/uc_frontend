@@ -70,6 +70,7 @@ const Cart = () => {
 							marginTop: '25%',
 							textTransform: 'uppercase',
 							letterSpacing: '10px',
+							textAlign: 'center',
 							color: 'gray'
 						}}
 					>
