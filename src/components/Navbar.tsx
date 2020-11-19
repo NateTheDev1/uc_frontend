@@ -78,6 +78,14 @@ const Navbar = () => {
 					>
 						Home
 					</Link>
+					<Link
+						to="/faq"
+						style={{
+							color: page === '/faq' ? '#BB67FF' : '#8F8F8F'
+						}}
+					>
+						FAQ
+					</Link>
 
 					{/* <Link
 						to="/contact"
