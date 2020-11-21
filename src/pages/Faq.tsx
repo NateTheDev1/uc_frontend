@@ -48,8 +48,9 @@ const Faq = () => {
 								Do you ship internationally?
 							</p>
 							<p className="answer">
-								Reach out to me through the contact banner and
-								we will troubleshoot and replace if needed.
+								I currently will only ship to Canada
+								internationally and there will be a $10 charge
+								to cover shipping expense.
 							</p>
 						</div>
 						<div>

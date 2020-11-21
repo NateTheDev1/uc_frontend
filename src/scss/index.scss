@@ -169,3 +169,7 @@ body {
 .done-link:hover {
 	cursor: pointer;
 }
+
+::-webkit-scrollbar {
+	display: none;
+}
