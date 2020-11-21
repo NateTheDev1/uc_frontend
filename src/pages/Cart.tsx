@@ -149,6 +149,19 @@ const Cart = () => {
 					>
 						Payment Details
 					</Button>
+					{!authenticated && (
+						<p
+							style={{
+								textAlign: 'center',
+								color: 'red',
+								textTransform: 'uppercase',
+								letterSpacing: '2px',
+								fontSize: '0.9rem'
+							}}
+						>
+							You must be logged in to complete your purchase.
+						</p>
+					)}
 				</div>
 			</div>
 		</MuiThemeProvider>
