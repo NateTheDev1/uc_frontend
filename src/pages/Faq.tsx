@@ -67,9 +67,8 @@ const Faq = () => {
 								What if my Untangled Cable does not work?
 							</p>
 							<p className="answer">
-								I currently will only ship to Canada
-								internationally and there will be a $10 charge
-								to cover shipping expense.
+								Reach out to me through the contacts below we
+								will troubleshoot and replace if needed.
 							</p>
 						</div>
 						<div

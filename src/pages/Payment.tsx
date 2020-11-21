@@ -83,6 +83,9 @@ const Payment = () => {
 		zip: '',
 		address: '',
 		state: '',
+		city: '',
+		name: '',
+		email: '',
 		country: 'United States'
 	});
 
@@ -138,13 +141,21 @@ const Payment = () => {
 			const payment = {
 				id,
 				amount: calcTotal(),
+				name: formDetails.name,
+				email: formDetails.email,
 				user: {
 					email: data?.user.username,
 					name: data?.user.name,
 					id: userId.toString()
 				},
 				cart: newCart,
-				shipping: { ...formDetails },
+				shipping: {
+					state: formDetails.state,
+					country: formDetails.country,
+					address: formDetails.address,
+					zip: formDetails.zip,
+					city: formDetails.city
+				},
 				description: `Online Order for ${amountgen(calcTotal())}`
 			};
 
@@ -210,6 +221,25 @@ const Payment = () => {
 						}}
 						type="text"
 						placeholder="123213 S Lane Rd."
+					/>
+					<p>City</p>
+					<TextField
+						variant="filled"
+						required
+						value={formDetails.city}
+						onChange={(e: any) =>
+							setFormDetails({
+								...formDetails,
+								city: e.target.value
+							})
+						}
+						style={{
+							width: '100%',
+							color: 'black',
+							marginBottom: '3%'
+						}}
+						type="text"
+						placeholder="Grand Rapids"
 					/>
 					<p>Zip Code</p>
 					<TextField
@@ -280,6 +310,46 @@ const Payment = () => {
 						}}
 						type="text"
 						placeholder="United States"
+					/>
+
+					<p>Name</p>
+					<TextField
+						variant="filled"
+						required
+						value={formDetails.name}
+						onChange={(e: any) =>
+							setFormDetails({
+								...formDetails,
+								name: e.target.value
+							})
+						}
+						style={{
+							width: '100%',
+							color: 'black',
+							marginBottom: '3%'
+						}}
+						type="text"
+						placeholder="John Doe"
+					/>
+
+					<p>Email</p>
+					<TextField
+						variant="filled"
+						required
+						value={formDetails.email}
+						onChange={(e: any) =>
+							setFormDetails({
+								...formDetails,
+								email: e.target.value
+							})
+						}
+						style={{
+							width: '100%',
+							color: 'black',
+							marginBottom: '3%'
+						}}
+						type="email"
+						placeholder="johndoe@email.com"
 					/>
 
 					<div className="card-details">
