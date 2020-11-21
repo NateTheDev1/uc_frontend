@@ -10,7 +10,7 @@ import store from './store';
 import LogRocket from 'logrocket';
 import { ApolloProvider } from '@apollo/client';
 import App from './App';
-LogRocket.init('untanbled-cables/uc_frontend');
+LogRocket.init('untangled-cables/uc_frontend');
 
 ReactDOM.render(
 	<Provider store={store}>
