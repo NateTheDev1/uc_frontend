@@ -45,6 +45,15 @@ const Faq = () => {
 						</div>
 						<div>
 							<p className="question">
+								Do you ship internationally?
+							</p>
+							<p className="answer">
+								Reach out to me through the contact banner and
+								we will troubleshoot and replace if needed.
+							</p>
+						</div>
+						<div>
+							<p className="question">
 								Are cables tested before they are sent out?
 							</p>
 							<p className="answer">
@@ -57,8 +66,9 @@ const Faq = () => {
 								What if my Untangled Cable does not work?
 							</p>
 							<p className="answer">
-								Reach out to me through the contact banner and
-								we will troubleshoot and replace if needed.
+								I currently will only ship to Canada
+								internationally and there will be a $10 charge
+								to cover shipping expense.
 							</p>
 						</div>
 						<div
