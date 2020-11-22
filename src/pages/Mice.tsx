@@ -1,7 +1,8 @@
 import { gql, useQuery } from '@apollo/client';
 import { CircularProgress } from '@material-ui/core';
-import React from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import ErrorIcon from '@material-ui/icons/Error';
 
 const ALL_PRODUCTS = gql`
 	query {
@@ -10,6 +11,16 @@ const ALL_PRODUCTS = gql`
 			name
 			image
 			price
+		}
+	}
+`;
+
+const GET_CONFIG = gql`
+	query {
+		getConfig {
+			id
+			value
+			type
 		}
 	}
 `;
@@ -32,13 +43,52 @@ function amountgen(amount?: number) {
 
 const MiceShop = () => {
 	const { loading, data, error } = useQuery(ALL_PRODUCTS);
+	const configRes = useQuery(GET_CONFIG);
 
 	const history = useHistory();
 
-	if (loading) {
+	if (loading || configRes.loading) {
 		return (
 			<div style={{ width: '80%', margin: '0 auto' }}>
 				<CircularProgress style={{ margin: '0 auto' }} />
+			</div>
+		);
+	}
+
+	if (configRes.data.getConfig[0].value === 'ON') {
+		return (
+			<div className="mice-shop">
+				<div className="mouse-shop-top">
+					<h3
+						style={{
+							fontSize: '1.4rem',
+							lineHeight: 2,
+							textTransform: 'capitalize',
+							color: 'red'
+						}}
+					>
+						The Merchant Has Temporarily Disabled Online Ordering.
+						Please Try Again Later
+					</h3>
+					<ErrorIcon
+						style={{
+							margin: '0 auto',
+							color: 'red',
+							fontSize: '2rem'
+						}}
+					/>
+					<Link
+						to="/"
+						style={{
+							marginTop: '5%',
+							color: '#BC67FF',
+							fontSize: '1.2rem',
+							letterSpacing: '2px'
+						}}
+					>
+						Go Home
+					</Link>
+				</div>
 			</div>
 		);
 	}
