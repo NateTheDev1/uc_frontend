@@ -52,7 +52,7 @@ const supported = [
 	'	LOGITECH G502',
 	'	LOGITECH G400',
 	'	LOGITECH G600',
-	'	RAZER Deathadder',
+	'	RAZER Deathadder V2',
 	'	RAZER Deathadder Chroma',
 	'	RAZER Deathadder Elite',
 	'	RAZER Naga Chroma',
@@ -74,7 +74,8 @@ const supported = [
 	'	STEELSERIES Rival 110',
 	'	STEELSERIES Kana2',
 	'	STEELSERIES Kinzu',
-	'	STEELSERIES  Xai'
+	'	STEELSERIES  Xai',
+	'	Vaxee Zygen NP-01'
 ];
 
 function amountgen(amount?: number) {
